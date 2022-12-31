@@ -1,22 +1,55 @@
 <template>
-  <div>
-    <b-navbar toggleable="lg" type="light"
-    variant="info"
-    class="meet-nav"
-    >
-      <b-navbar-brand href="/">Door Service</b-navbar-brand>
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav class="ml-auto"  v-if="this.$store.state.auth.token!=''">
-                <b-nav-text>
-                    Hello <span class="text-primary">
-                            {{this.$store.state.auth.name}}
-                        </span>
-                </b-nav-text>
-            <b-nav-item  @click.prevent="SignOut">Sign Out</b-nav-item>
-            </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+  
+  <div class="ma-12 pa-12">
+    <v-card>
+      <v-navigation-drawer
+        permanent
+        expand-on-hover
+      >
+        <v-list>
+          <v-list-item class="px-2">
+            <v-list-item-avatar>
+              <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+            </v-list-item-avatar>
+          </v-list-item>
+
+          <v-list-item link>
+            <v-list-item-content>
+              <v-list-item-title class="text-h6">
+                Sandra Adams
+              </v-list-item-title>
+              <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+
+        <v-divider></v-divider>
+
+        <v-list
+          nav
+          dense
+        >
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon>mdi-folder</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>My Files</v-list-item-title>
+          </v-list-item>
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon>mdi-account-multiple</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Shared with me</v-list-item-title>
+          </v-list-item>
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon>mdi-star</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Starred</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+    </v-card>
   </div>
 </template>
 
@@ -38,7 +71,5 @@ export default {
 </script>
 
 <style scoped>
-.bg-info.meet-nav{
-  background-color:#2c4ef8 !important;
-}
+
 </style>

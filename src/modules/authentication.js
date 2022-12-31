@@ -59,7 +59,8 @@ const auth={
             localStorage.removeItem(Email);
             localStorage.removeItem(Name);
             localStorage.removeItem(Role);
-        }
+        },
+        
     }
 }
 
