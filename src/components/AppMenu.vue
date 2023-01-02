@@ -1,55 +1,44 @@
 <template>
   
-  <div class="ma-12 pa-12">
-    <v-card>
-      <v-navigation-drawer
-        permanent
-        expand-on-hover
-      >
-        <v-list>
-          <v-list-item class="px-2">
-            <v-list-item-avatar>
-              <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
-            </v-list-item-avatar>
-          </v-list-item>
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="info"
+    class="ds-nav">
+    <b-navbar-brand href="/">Door Service</b-navbar-brand>
 
-          <v-list-item link>
-            <v-list-item-content>
-              <v-list-item-title class="text-h6">
-                Sandra Adams
-              </v-list-item-title>
-              <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-        <v-divider></v-divider>
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav>
+        <b-nav-item href="#">Services</b-nav-item>
+        <b-nav-item href="#" disabled>Disabled</b-nav-item>
+      </b-navbar-nav>
 
-        <v-list
-          nav
-          dense
-        >
-          <v-list-item link>
-            <v-list-item-icon>
-              <v-icon>mdi-folder</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>My Files</v-list-item-title>
-          </v-list-item>
-          <v-list-item link>
-            <v-list-item-icon>
-              <v-icon>mdi-account-multiple</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Shared with me</v-list-item-title>
-          </v-list-item>
-          <v-list-item link>
-            <v-list-item-icon>
-              <v-icon>mdi-star</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Starred</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-    </v-card>
+      <!-- Right aligned nav items -->
+      <b-navbar-nav class="ml-auto">
+        <b-nav-form>
+          <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+          <b-button size="sm" class="my-2 my-sm-0 button" type="submit">Search</b-button>
+        </b-nav-form>
+        <b-nav-item
+          v-if="this.$store.state.auth.token==''"  
+          href="/login">Login</b-nav-item>
+          <b-nav-item-dropdown
+          v-else
+          right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              <v-avatar color="indigo">
+                <v-icon dark>
+                  mdi-account-circle
+                </v-icon>
+              </v-avatar>
+            </template>
+            <b-dropdown-item @click.prevent="profile">Profile</b-dropdown-item>
+            <b-dropdown-item @click.prevent="SignOut">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
   </div>
 </template>
 
@@ -60,16 +49,34 @@ export default {
     methods:{
         SignOut(){
             this.$store.dispatch('logoutUser');
-            this.$router.push('/');
+            this.$router.push('/home');
             Vue.$toast.open({
                 message:'User Loged out successfully',
-                type:'success'
+                type:'success',
+                position:'top-right'
             });
         },
+        profile(){
+          if(this.$store.state.auth.role=='admin'){
+            this.$router.push('/user-admin');
+          }else if(this.$store.state.auth.role=='provider'){
+            this.$router.push('/user-provider');
+          }else{
+            this.$router.push('/user')
+          }
+        }
     }
 }
 </script>
 
 <style scoped>
+.bg-info.ds-nav{
+  background-color: #6860a7 !important;
+}
+
+.button{
+  background-color:#d7d3f3;
+}
+
 
 </style>

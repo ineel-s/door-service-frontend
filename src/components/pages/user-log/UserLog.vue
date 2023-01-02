@@ -1,6 +1,6 @@
 <template>
     <v-app id="inspire">
-    <v-content>
+    <v-main>
       <v-container class="fill-height m-auto" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="8">
@@ -193,7 +193,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app> 
 </template>
 
@@ -260,17 +260,26 @@ export default {
     },
     methods:{
       async onSignin(){
+        
         const loginDetails={
           email:this.email,
           password:this.password
         }
+        if(this.email==='' && this.password===''){
+          Vue.$toast.open({
+            type:'error',
+            message:'Please fill Entries',
+            position: 'top'
+          });
+        }
+        
         const login = await this.$store.dispatch('loginUser',loginDetails);
         if(login){
           Vue.$toast.open({
             message:'logged In',
             type:'success'
           });
-          this.$router.push('/home');
+          this.$router.push('/');
         }else{
           Vue.$toast.open({
             message:'You are not authorized',
@@ -278,6 +287,8 @@ export default {
             position:'top'
           });
         }
+      
+      
       },
       async onSignup(){
 
