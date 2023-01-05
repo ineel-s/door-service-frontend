@@ -1,6 +1,6 @@
 <template>
   
-  <div>
+  <div class="nav-css">
     <b-navbar toggleable="lg" type="dark" variant="info"
     class="ds-nav">
     <b-navbar-brand href="/">Door Service</b-navbar-brand>
@@ -9,8 +9,14 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item href="#">Services</b-nav-item>
-        <b-nav-item href="#" disabled>Disabled</b-nav-item>
+        <b-nav-item href="/services">Services</b-nav-item>
+
+        <b-nav-item 
+        v-if="this.$store.state.auth.role==='admin'"
+        href="/userdetails">UserDetails</b-nav-item>
+        <b-nav-item 
+        v-if="this.$store.state.auth.role==='admin'"
+        href="/bookings">Bookings</b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
@@ -57,12 +63,8 @@ export default {
             });
         },
         profile(){
-          if(this.$store.state.auth.role=='admin'){
-            this.$router.push('/user-admin');
-          }else if(this.$store.state.auth.role=='provider'){
-            this.$router.push('/user-provider');
-          }else{
-            this.$router.push('/user')
+          if(this.$store.state.auth.role!==''){
+            this.$router.push('/profile');
           }
         }
     }
@@ -70,12 +72,16 @@ export default {
 </script>
 
 <style scoped>
+
 .bg-info.ds-nav{
   background-color: #6860a7 !important;
 }
 
 .button{
   background-color:#d7d3f3;
+}
+.nav-css{
+  width:100%;  
 }
 
 
