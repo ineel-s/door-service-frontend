@@ -4,8 +4,11 @@ const Token = 'token';
 const Email ='email';
 const Name = 'name';
 const Role = 'role';
-const id = 'id';
-const gender='gender'
+const Id = 'id';
+const Gender='gender';
+const PhoneNumber='phoneNumber';
+const Address='address';
+
 
 const auth={
     state:{
@@ -13,8 +16,10 @@ const auth={
         email: localStorage.getItem(Email) || '',
         name: localStorage.getItem(Name) || '',
         role: localStorage.getItem(Role) || '',
-        id: localStorage.getItem(id) || '',
-        gender: localStorage.getItem(gender) || ''
+        id: localStorage.getItem(Id) || '',
+        gender: localStorage.getItem(Gender) || '',
+        phoneNumber: localStorage.getItem(PhoneNumber) || '',
+        address: localStorage.getItem(Address) || ''
     },
     getters:{
         isAuthenticated(state){
@@ -42,26 +47,36 @@ const auth={
         },
         setgender(state,gender){
             state.gender=gender;
+        },
+        setphoneNumber(state,phoneNumber){
+            state.phoneNumber=phoneNumber;
+        },
+        setaddress(state,address){
+            state.address=address;
         }
     },
     actions:{
         async loginUser( {commit}, credentials){
             const data = await loginUser(credentials);
             console.log(data);
-            const {token, email, name, role, id} = data;
+            const {token, email, name, role, id,gender,address,phoneNumber} = data;
             localStorage.setItem(Token, token);
             localStorage.setItem(Email, email);
             localStorage.setItem(Name, name);
             localStorage.setItem(Role, role);
-            localStorage.setItem(id, id);
-            localStorage.setItem(gender, gender);
+            localStorage.setItem(Id, id);
+            localStorage.setItem(Gender, gender);
+            localStorage.setItem(PhoneNumber, phoneNumber);
+            localStorage.setItem(Address, address);
 
             commit('setToken',token);
             commit('setEmail',email);
             commit('setName', name);
             commit('setRole',role);
             commit('setId',id);
-            commit('setId',gender);
+            commit('setgender',gender);
+            commit('setphoneNumber',phoneNumber);
+            commit('setaddress',address);
             return true;
         },
         logoutUser({commit}){
@@ -71,12 +86,17 @@ const auth={
             commit('setRole','');
             commit('setId','');
             commit('setgender','');
+            commit('setphoneNumber','');
+            commit('setaddress','');
             localStorage.removeItem(Token);
             localStorage.removeItem(Email);
             localStorage.removeItem(Name);
             localStorage.removeItem(Role);
-            localStorage.removeItem(id);
-            localStorage.removeItem(gender);
+            localStorage.removeItem(Id);
+            localStorage.removeItem(Gender);
+            localStorage.removeItem(PhoneNumber);
+            localStorage.removeItem(Address);
+            
         },
         
     }

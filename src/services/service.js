@@ -7,6 +7,18 @@ const getAllService = async()=>{
     return response.data
 }
 
+const registerService = async(ServiceDetails)=>{
+        const response = await axios.post(`${Config.baseUrl}/service`,ServiceDetails,{
+            headers:{
+                'Accept':'multipart/form-data',
+            }
+        });
+        console.log(response);
+        return response;
+
+}
+
 export{
-getAllService
+getAllService,
+registerService
 }

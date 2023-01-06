@@ -4,7 +4,7 @@ import Config  from "@/config";
 const getUserDetails = async(id)=>{
     const response = await axios.get(`${Config.baseUrl}/user/${id}`);
     console.log(response.data.data);
-    return response.data.data.data;
+    return response.data.data;
 }
 
 const getAllUsers = async()=>{

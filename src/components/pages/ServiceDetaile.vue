@@ -44,11 +44,16 @@
                     <em class="text-secondary">exclusive gst</em>
                   </div>
                   <div class="d-flex flex-column mt-4">
-                    <button class="btn btn-outline-primary btn-sm mt-2" type="button">
-                      Add Service
+                    <button class="btn btn-outline-primary btn-sm mt-2"  
+                    type="button"
+                    :value="item.name"
+                    @click.prevent="bookService"
+                    >
+                      Book Service
                     </button>
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>
@@ -69,6 +74,7 @@ export default {
         loading: this.loading,
         error:this.error,
         items:[],
+        serviceID:''
       }
     },
     async mounted(){
@@ -82,6 +88,12 @@ export default {
         this.error=error;
       }finally{
         this.loading = false;
+      }
+    },
+    methods:{
+      async bookService(){
+        // this.$router.push({name:'/bookservice', params:`${id}`} )
+        console.log();
       }
     }
 }
