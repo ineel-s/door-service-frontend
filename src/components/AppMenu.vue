@@ -20,6 +20,9 @@
         <b-nav-item 
         v-if="this.$store.state.auth.role==='admin' || this.$store.state.auth.role==='provider'"
         href="/addservice">Add Service</b-nav-item>
+      <b-nav-item 
+        v-if="this.$store.state.auth.token!==''"
+        href="/bookingstatus">Your Bookings</b-nav-item>
       </b-navbar-nav>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">

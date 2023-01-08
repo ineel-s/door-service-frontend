@@ -33,7 +33,7 @@
                   <p class="text-primary mb-4 mb-md-0 ">
                     Service time : <span class="text-info"> {{ item.serviceTime }}</span>
                   </p>
-                  <p>
+                  <p class="h6">
                     {{ item.cat[0].name }}
                   </p>
                 </div>
@@ -92,12 +92,6 @@ export default {
         this.loading = false;
       }
     },
-    methods:{
-      async bookService(){
-        // this.$router.push({name:'/bookservice', params:`${id}`} )
-        console.log();
-      }
-    }
 }
 </script>
 

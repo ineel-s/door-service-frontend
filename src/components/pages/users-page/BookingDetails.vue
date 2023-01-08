@@ -28,6 +28,7 @@
             <th class="text-center">Service Name</th>
             <th class="text-center">Booking Date</th>
             <th class="text-center">Booking Time</th>
+            <th class="text-center">Address </th>
             <th class="text-center">Service Status</th>
             <th class="text-center">Payment Status</th>
             <th class="text-center">Remove</th>
@@ -41,6 +42,7 @@
             <td class="pt-3-half" contenteditable="false">{{item.service[0].name}}</td>
             <td class="pt-3-half" contenteditable="false">{{ item.bookingDate }}</td>
             <td class="pt-3-half" contenteditable="false">{{ item.bookingTime }}</td>
+            <td class="pt-3-half" contenteditable="false">{{ item.serviceAddress }}</td>
             <td class="pt-3-half" contenteditable="true">{{ item.serviceStatus }}</td>
             <td class="pt-3-half" contenteditable="true">{{ item.paymentStatus }}</td>
             <td>

@@ -69,7 +69,6 @@ export default {
     async onsubmit() {
       const servicedetails = {
         name: this.name,
-        image: this.image,
         price: this.price,
         categoryID: this.categoryID,
         discription: this.discription,
