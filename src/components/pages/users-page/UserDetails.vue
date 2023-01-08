@@ -15,7 +15,7 @@
             <img src="@/image/Profile.png" alt="profile Image">
           </div>
 
-          <div class="name_job">{{ item.name }}</div>
+          <div class="name_job" >{{ item.name }}</div>
             <ul class="ulist">
               <li><span class="font-weight-bold">Email :- </span>{{ item.email }}</li>
               <li><span class="font-weight-bold">Ph No :- </span>{{ item.phoneNumber }}</li>

@@ -19,7 +19,9 @@
               <p>{{user.role}}</p>
               <div v-if="this.$store.state.auth.role==='admin'">
 
-                  <i class="fa fa-trash mb-5"></i> <span>Delete user</span>
+                <button @click.prevent="deleteUser">
+                 <i class="fa fa-trash "></i> <span>Delete user</span>
+                </button>  
               </div>
             </div>
             <div class="col-md-8">
@@ -61,6 +63,7 @@
 <script>
 import Vue from 'vue';
 import { getUserDetails } from '@/services/userdetails';
+import{deleteUser} from '@/services/userdetails'
 export default {
     name:'SingleUser',
     data(){
@@ -80,9 +83,37 @@ export default {
         }catch(error){
             Vue.$toast.open({
                 type:'error',
-                message:'No user find'
+                message:'No user find',
+                position:'top'
             })
         }
+    },
+    methods:{
+      async deleteUser(){
+        this.id=this.$route.params.id;
+
+        if(window.confirm("Do you want to delete this user?")){
+          try {
+            const user = await deleteUser(this.id);
+            if(!user){
+              Vue.$toast.open({
+                type:'error',
+                message:'User Not Deleted!',
+                position:'top'
+              })
+            }
+            Vue.$toast.open("User Deleted !")
+            this.$router.push('/userdetails')
+          } catch (error) {
+            Vue.$toast.open({
+              type:'error',
+              message:error.message,
+              position:"top"
+            })
+          }
+
+        }
+      }
     }
 }
 </script>

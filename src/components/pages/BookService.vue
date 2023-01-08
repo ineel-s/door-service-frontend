@@ -74,7 +74,7 @@
                                                     <validation-provider v-slot="{ errors }" 
                                                     name="Address"
                                                     rules="required|max:60">
-                                                <v-text-field  v-model="statusAddress"
+                                                <v-text-field  v-model="serviceAddress"
                                                 :error-messages="errors"
                                                  label="Address"
                                                  counter="60"
@@ -172,7 +172,7 @@ export default {
             error:this.error,
             value:null,
             paymentStatus :'Pending',
-            statusAddress:'',
+            serviceAddress:'',
             bookingDate:'',
             bookingTime:'',
             providerID:'',
@@ -206,7 +206,7 @@ export default {
             providerID:this.items.providerID,
             bookingDate:this.bookingDate,
             bookingTime:this.bookingTime,
-            statusAddress:this.statusAddress,
+            serviceAddress:this.serviceAddress,
             paymentStatus:this.paymentStatus,
         };
         console.log(bookingDetails);
@@ -215,6 +215,7 @@ export default {
             const booking = await bookService(this.userID, bookingDetails);
             console.log(booking.data);            
             Vue.$toast.open("Service booked");
+            this.$router.push('/bookingstatus')
         } catch (error) {
             Vue.$toast.open({
                 type: 'error',

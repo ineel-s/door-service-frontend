@@ -47,8 +47,8 @@
             <td class="pt-3-half" contenteditable="true">{{ item.paymentStatus }}</td>
             <td>
               <span class="table-remove"
-                ><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">
-                  Remove
+                ><button type="button" class="btn btn-success btn-rounded btn-sm my-0">
+                  Show
                 </button></span
               >
             </td>

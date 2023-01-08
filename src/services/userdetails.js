@@ -13,7 +13,13 @@ const getAllUsers = async()=>{
     return response.data;
 }
 
+const deleteUser = async(id)=>{
+    const response = await axios.delete(`${Config.baseUrl}/user/${id}`);
+    return response;
+}
+
 export{
     getUserDetails,
-    getAllUsers
+    getAllUsers,
+    deleteUser
 }

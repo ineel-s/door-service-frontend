@@ -33,7 +33,7 @@
                     <p class="text-muted">{{this.$store.state.auth.phoneNumber}}</p>
                   </div>
                 </div>
-                <h6>Services</h6>
+
                 <hr class="mt-0 mb-4">
                 <div class="row pt-1">
                   <div class="col-6 mb-3">

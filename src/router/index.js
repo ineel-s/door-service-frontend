@@ -8,7 +8,8 @@ import UserProfile from '@/components/pages/UserProfile.vue';
 import UserDetails from '../components/pages/users-page/UserDetails.vue';
 import ServiceDetaile from '@/components/pages/ServiceDetaile.vue';
 import SingleUser from '@/components/pages/users-page/SingleUser.vue';
-import BookService from '@/components/pages/BookService.vue'
+import BookService from '@/components/pages/BookService.vue';
+import ProviderAssigned from '@/components/pages/ProviderAssigned.vue';
 const router = new Router({
     mode:'history',
     routes : [
@@ -66,6 +67,11 @@ const router = new Router({
             name:'bookservice',
             path:'/bookservice/:id',
             component:BookService
+        },
+        {
+            name:'providerassigned',
+            path:'/serviceassigned',
+            component:ProviderAssigned
         }
     ]
 });

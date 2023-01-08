@@ -8,13 +8,13 @@ return response.data;
 };
 
 const bookService = async (id , bookingdetails)=>{
-    const response = await axios.post(`${Config.baseUrl}/${id}`, bookingdetails);
+    const response = await axios.post(`${Config.baseUrl}/bookingservice/${id}`, bookingdetails);
     console.log(response);
     return response;
 };
 
 const updateBooking = async (id, details)=>{
-    const response = await axios.put(`${Config.baseUrl}/${id}`, details);
+    const response = await axios.put(`${Config.baseUrl}/bookingservice/${id}`, details);
     console.log(response);
     return response
 }

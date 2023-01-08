@@ -1,21 +1,40 @@
 <template>
   <div class="container">
-    <form @submit.prevent="onsubmit" enctype="multipart/form-data">
-      <v-text-field
-        v-model="name"
-        label="Service Name"
-        type="text"
-        color="deep-purple accent-3"
-      />
-      <v-text-field
-        v-model="price"
-        append-icon="fa-rupee-sign"
-        type="number"
-        label="Price"
-        class="input-group--focused"
-      />
-
-      <div class="d-flex align-center">
+    <h2 align="center">Register New Service</h2>
+    <v-main>
+    <v-row >
+      <v-col>
+        <v-card ref="form" class="p-4">
+          <form @submit.prevent="onsubmit" enctype="multipart/form-data">
+            
+          <validation-observer>
+                            <validation-provider
+                              v-slot="{ errors }"
+                              name="Service Name"
+                              rules="required|min:3"
+                            >
+                              <v-text-field
+                                v-model="name"
+                                :error-messages="errors"
+                                label="Service Name"
+                                type="text"
+                                color="deep-purple accent-3"
+                              />
+                            </validation-provider>
+                            <validation-provider
+                            v-slot="{ errors }"
+                              name="Price"
+                              rules="required"
+                            >
+                            <v-text-field
+                            v-model="price"
+                            :error-messages="errors"
+                            type="double"
+                            label="Price"
+                            class="input-group--focused"
+                            />
+                          </validation-provider>
+                          <div class="d-flex align-center">
         <span class="text-muted">Category</span>
         <b-form-select
           class="ml-5"
@@ -25,37 +44,76 @@
           text-field="name"
         ></b-form-select>
       </div>
-      <v-text-field
-        v-model="discription"
-        type="text"
-        :counter="140"
-        label="Discription"
-      />
-      <v-text-field
-        v-model="serviceTime"
-        type="text"
-        label="Service Duration"
-      />
+                            <validation-provider
+                            v-slot={errors}
+                            name="Discription"
+                            rules="required|max:140"
+                            >
+                              <v-text-field
+                                  v-model="discription"
+                                  :error-messages="errors"
+                                  type="text"
+                                  :counter="140"
+                                  label="Discription"
+                                />
+                            </validation-provider>
+                            <validation-provider
+                            v-slot="{errors}"
+                            name="duration"
+                            rules="required"
+                            >
+                              <v-text-field
+                                  v-model="serviceTime"
+                                  :error-messages="errors"
+                                  type="time"
+                                  label="Service Duration"
+                                />
+
+
+                            </validation-provider>
+                          </validation-observer>
+
+      
       <div class="text-center mt-4">
-        <v-btn rounded color="deep-purple accent-3" type="submit">Add</v-btn>
+        <v-btn rounded color="deep-purple accent-3" type="submit">Register</v-btn>
       </div>
     </form>
+    </v-card>
+    </v-col>
+    </v-row>
+  </v-main>
   </div>
 </template>
 
 <script>
 import { getAllCategory } from "@/services/category";
 import { registerService } from "@/services/service";
+import {extend, ValidationObserver, ValidationProvider , setInteractionMode} from "vee-validate";
+import {min, max} from 'vee-validate/dist/rules'
 import Vue from "vue";
+setInteractionMode('eager')
+
+extend("max", {
+  ...max,
+  message: "{_field_} may not be greater than {length} characters",
+});
+extend("min", {
+  ...min,
+  message: "{_field_} must have minimum {length} characters",
+});
 export default {
   name: "ProviderPage",
+  components:{
+    ValidationObserver,
+    ValidationProvider
+  },
   data() {
     return {
       name: "",
       price: "",
       categoryID: "",
       discription: "",
-      options: [],
+      options:[],
       serviceTime: "",
       providerID: "",
     };

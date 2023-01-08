@@ -1,5 +1,5 @@
 <template>
-      <section>
+  <section>
   <div class="container py-5">
     <div class="d-flex justify-content-center" v-if="loading">
       <div class="spinner-border" role="status">
@@ -32,21 +32,20 @@
                     Service time : <span class="text-info"> {{ item.service[0].serviceTime }}</span><br>
                     Status :
                     <span v-if="item.serviceStatus==='Success'">
-                        <span class="bg-success text-white"> {{ item.serviceStatus }}</span>
+                        <span class="p-1 bg-success text-white">
+                             {{ item.serviceStatus }}</span>
                     </span>
                     <span v-else-if="item.serviceStatus==='Cancelled'">
-                        <span class="bg-danger text-white"> {{ item.serviceStatus }}</span>
+                        <span class="p-1 bg-danger text-white"> {{ item.serviceStatus }}</span>
                     </span>
                     <span v-else-if="item.serviceStatus==='Accepted'">
                         <span class="p-1 bg-warning text-white"> {{ item.serviceStatus }}</span>
                     </span>
                     <span v-else>
-                        <span class="bg-info text-white"> {{ item.serviceStatus }}</span>
+                        <span class="p-1  bg-info text-white"> {{ item.serviceStatus }}</span>
                     </span>
-                  </p>
-                  <div v-if="item.isCanceledBy">
-                    <span>Cancelled By {{ item.isCanceledBy }}</span>
-                  </div>
+                </p><br>
+                <span class="p-1 bg-secondary text-white">Payment Status : {{ item.paymentStatus }}</span>
                   <hr>
                   <p>
                     <span class="h6">Provider Name :</span> <span> {{ item.provider[0].name }}</span><br>
@@ -58,13 +57,23 @@
                                             <h4 class="mb-1 me-1">Total = &#8377; {{ item.serviceCost }} &nbsp; </h4> 
                                         </div>
                                     <em class="text-secondary">( &#8377;{{ item.service[0].price }} + &#8377;{{ item.service[0].price*.18 }} gst )</em>
+
+                                    <div class="d-flex flex-column mt-4">
+                    <button class="btn btn-outline-success btn-sm mt-2"  
+                    type="button"
+                    v-on:click="acceptService(item._id)"
+                    :disabled="false"
+                    >
+                    Accept Request
+                    </button>
+                  </div>
                   <div class="d-flex flex-column mt-4">
                     <button class="btn btn-outline-danger btn-sm mt-2"  
                     type="button"
                     v-on:click="cancelService(item._id)"
-                    :disabled="item.isCanceledBy?'' :disabled"
+                    :disabled="false"
                     >
-                    Cancel Service
+                    Cancel Request
                     </button>
                   </div>
                 </div>
@@ -78,15 +87,14 @@
     </div>
   </div>
 </section>
-  </template>
-  
-  <script>
-//   import Vue from 'vue';
+</template>
+
+<script>
 import { getBookings } from '@/services/bookings';
 import {updateBooking} from '@/services/bookings'
-  export default {
-      name:'BookingStatus',
-      data(){
+export default {
+    name:'ProviderAssigned',
+    data(){
         return{
             loading:this.loading,
             error:this.error,
@@ -94,19 +102,18 @@ import {updateBooking} from '@/services/bookings'
             items:[],
             btn:'',
             isCanceledBy:'',
-            disabled:false
+            serviceStatus:'',
         }
       },
       async mounted(){
         this.id= this.$store.state.auth.id;
-        
         console.log(this.id);
         this.loading=true;
         try {
             const userData = await getBookings();
             console.log("User Data",userData.bookings);
             for (let i = 0; i < userData.bookings.length; i++) {
-                if (userData.bookings[i].userID === this.id) {
+                if (userData.bookings[i].providerID === this.id) {
                     this.items.push(userData.bookings[i]);
                 }
             }
@@ -119,29 +126,42 @@ import {updateBooking} from '@/services/bookings'
 
       },
       methods:{
-       async cancelService(e){
+       async cancelService(bookingID){
         
-        const _id = e;
+        const _id = bookingID;
         console.log(_id);
-
         const updatedetails ={
             isCanceledBy:this.$store.state.auth.role,
             serviceStatus:"Cancelled"
         }
         console.log(updatedetails);
            if( window.confirm("Do you really want to cancel service?")){
-            console.log("service canceled");
+            console.log("service Cancelled");
             const cancel = await updateBooking(_id,updatedetails);
             console.log(cancel);
-            window.location.reload();
+           }   
+        },
+        async acceptService(bookingID){
+        
+        const _id = bookingID;
+        console.log(_id);
+        const updatedetails ={
+            serviceStatus:"Accepted",
+        }
+        console.log(updatedetails);
+           if( window.confirm("Do you want to Accept service?")){
+            console.log("Service Accepted");
+            const cancel = await updateBooking(_id,updatedetails);
+            console.log(cancel);
             
            }   
-        }
+        },
         
       }
-  }
-  </script>
-  
-  <style>
-  
-  </style>
+
+}
+</script>
+
+<style>
+
+</style>
