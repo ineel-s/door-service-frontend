@@ -7,7 +7,8 @@ import ProviderPage from '@/components/pages/users-page/ProviderPage.vue';
 import UserProfile from '@/components/pages/UserProfile.vue';
 import UserDetails from '../components/pages/users-page/UserDetails.vue';
 import ServiceDetaile from '@/components/pages/ServiceDetaile.vue';
-import SingleUser from '@/components/pages/users-page/SingleUser.vue'
+import SingleUser from '@/components/pages/users-page/SingleUser.vue';
+import BookService from '@/components/pages/BookService.vue'
 const router = new Router({
     mode:'history',
     routes : [
@@ -60,6 +61,11 @@ const router = new Router({
             name: 'ServiceDetail',
             path:'/services',
             component: ServiceDetaile
+        },
+        {
+            name:'bookservice',
+            path:'/bookservice/:id',
+            component:BookService
         }
     ]
 });

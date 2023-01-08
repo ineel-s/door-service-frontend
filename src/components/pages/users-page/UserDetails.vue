@@ -22,12 +22,12 @@
               <li><span class="font-weight-bold">Role :- </span>{{ item.role }}</li>
             </ul>
           
-          <div class="btns">
+            <div class="btns">
             <router-link :to="{ name: 'single-user', path: '/userdetails', params: { id: item._id } }">
                 <button>Veiw Profile</button>
-            </router-link>
-          </div>
-          </div>
+              </router-link>
+              </div>
+            </div>
         </div>
       </div>
     </div>
@@ -130,14 +130,14 @@ export default {
 .btns {
   margin-top: 20px;
   margin-bottom: 5px;
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
   width: 100%;
 }
 
 .btns button {
   width: 100%;
-  padding: 9px 0px;
+  padding: 1rem 3rem;
   outline: none;
   border: 2px solid #460063;
   border-radius: 5px;
@@ -175,7 +175,7 @@ export default {
   }
 }
 
-@media (max-width:710px) {
+@media (max-width:767px) {
   .container1 .box {
     width: 100%;
   }

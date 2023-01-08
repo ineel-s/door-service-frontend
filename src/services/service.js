@@ -18,7 +18,14 @@ const registerService = async(ServiceDetails)=>{
 
 }
 
+const getprebookingService = async()=>{
+    const response = await axios.get(`${Config.baseUrl}/service/booking/mounted`);
+    console.log(response);
+    return response.data;
+}
+
 export{
 getAllService,
-registerService
+registerService,
+getprebookingService
 }

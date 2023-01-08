@@ -43,15 +43,17 @@
                     <span class="text-danger"><s>&#8377; {{ item.price * 1.5 }}</s></span>&nbsp;
                     <em class="text-secondary">exclusive gst</em>
                   </div>
+                  <router-link
+                  :to="{name:'bookservice', path:'/bookservice',params:{id:item._id}}"
+                  >
                   <div class="d-flex flex-column mt-4">
                     <button class="btn btn-outline-primary btn-sm mt-2"  
                     type="button"
-                    :value="item.name"
-                    @click.prevent="bookService"
                     >
                       Book Service
                     </button>
                   </div>
+                </router-link>
                 </div>
                 
               </div>
