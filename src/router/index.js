@@ -10,6 +10,11 @@ import ServiceDetaile from '@/components/pages/ServiceDetaile.vue';
 import SingleUser from '@/components/pages/users-page/SingleUser.vue';
 import BookService from '@/components/pages/BookService.vue';
 import ProviderAssigned from '@/components/pages/ProviderAssigned.vue';
+
+const meta = {
+    authorize: [ 'admin', 'customer' ,'provider']
+};
+
 const router = new Router({
     mode:'history',
     routes : [
@@ -31,32 +36,44 @@ const router = new Router({
         {
             name: 'booking-status',
             path: '/bookingstatus',
-            component: BookingStatus
+            component: BookingStatus,
+            meta
         },
         {
             name: 'provider',
             path: '/addservice',
-            component: ProviderPage
+            component: ProviderPage,
+            meta :{ 
+                authorize:['admin', 'provider']
+            }
         },
         {
             name:'profile',
             path:'/profile',
-            component:UserProfile
+            component:UserProfile,
+            meta
         },
         {
             name:'userdetails',
             path:'/userdetails',
-            component:UserDetails
+            component:UserDetails,
+            meta:{
+                authorize:['admin']
+            }
         },
         {
             name:'single-user',
             path:'/userdetails/:id',
-            component:SingleUser
+            component:SingleUser,
+            meta
         },
         {
             name:'bookings',
             path:'/bookings',
-            component:BookingDetails
+            component:BookingDetails,
+            meta:{
+                authorize:['admin']
+            }
         },
         {
             name: 'ServiceDetail',
@@ -66,12 +83,16 @@ const router = new Router({
         {
             name:'bookservice',
             path:'/bookservice/:id',
-            component:BookService
+            component:BookService,
+            meta
         },
         {
             name:'providerassigned',
             path:'/serviceassigned',
-            component:ProviderAssigned
+            component:ProviderAssigned,
+            meta:{
+                authorize:['admin','provider']
+            }
         }
     ]
 });
