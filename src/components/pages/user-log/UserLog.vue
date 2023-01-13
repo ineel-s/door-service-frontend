@@ -323,20 +323,21 @@ export default {
           position: "top",
         });
       }
-
-      const login = await this.$store.dispatch("loginUser", loginDetails);
+      try {
+        const login = await this.$store.dispatch("loginUser", loginDetails);
       if (login) {
         Vue.$toast.open({
           message: "logged In",
           type: "success",
         });
         this.$router.push("/");
-      } else {
+      }  
+      } catch (error) {
         Vue.$toast.open({
-          message: "You are not authorized",
+          message: error.message,
           type: "error",
           position: "top",
-        });
+        }); 
       }
     },
     async onSignup() {
@@ -351,28 +352,30 @@ export default {
       };
       console.log(signupDetails);
       const baseUrl = Config.baseUrl;
-
+      
+      try {
       const response = await axios.post(
         `${baseUrl}/auth/register`,
         signupDetails
       );
       console.log(response.data);
-
-      if (response) {
+        if (response) {
         Vue.$toast.open({
           message: "Signed up Successfully",
           type: "succcess",
           position: "bottom",
         });
-        this.$router.push("/");
-      } else {
+        // this.$router.push("/login");
+        this.step = this.step-1;
+      }
+      } catch (error) {
         Vue.$toast.open({
-          message: "Something Went wrong please try again",
+          message: error.message,
           type: "error",
           position: "top",
         });
       }
-      return response;
+      
     },
   },
 };

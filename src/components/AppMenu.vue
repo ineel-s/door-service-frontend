@@ -1,6 +1,5 @@
 <template>
-  
-  <div class="nav-css">
+  <div class="sticky-top">
     <b-navbar toggleable="lg" type="dark" variant="info"
     class="ds-nav">
     <b-navbar-brand href="/">Door Service</b-navbar-brand>
@@ -9,8 +8,6 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item href="/services">Services</b-nav-item>
-
         <b-nav-item 
         v-if="this.$store.state.auth.role==='admin'"
         href="/userdetails">UserDetails</b-nav-item>
@@ -19,13 +16,13 @@
         href="/bookings">Bookings</b-nav-item>
         <b-nav-item 
         v-if="this.$store.state.auth.role==='admin' || this.$store.state.auth.role==='provider'"
-        href="/addservice">NewService</b-nav-item>
+        href="/addservice">AddService</b-nav-item>
       <b-nav-item 
         v-if="this.$store.state.auth.token!==''"
         href="/bookingstatus">YourBookings</b-nav-item>
       
       <b-nav-item 
-        v-if="this.$store.state.auth.token!==''"
+        v-if="this.$store.state.auth.role==='provider' || this.$store.state.auth.role==='admin'"
         href="/serviceassigned">ServiceRequest</b-nav-item>
       </b-navbar-nav>
       
@@ -41,7 +38,7 @@
           <b-nav-item-dropdown
           v-else
           right>
-            <!-- Using 'button-content' slot -->
+
             <template #button-content>
               <v-avatar color="indigo">
                 <v-icon dark>
@@ -55,7 +52,7 @@
         </b-navbar-nav>
     </b-collapse>
   </b-navbar>
-  </div>
+</div>
 </template>
 
 <script>
@@ -81,7 +78,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 .bg-info.ds-nav{
   background-color: #6860a7 !important;
@@ -91,8 +88,12 @@ export default {
   background-color:#d7d3f3;
 }
 .nav-css{
-  width:100%;  
+  width:100%; 
 }
+header {
+  width: 100%;
+  text-align: center;
 
+}
 
 </style>

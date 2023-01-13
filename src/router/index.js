@@ -3,7 +3,7 @@ import UserLog from '@/components/pages/user-log/UserLog.vue';
 import HomePage from '@/components/pages/HomePage.vue'
 import BookingDetails from '@/components/pages/users-page/BookingDetails.vue';
 import BookingStatus from '@/components/pages/users-page/BookingStatus.vue';
-import ProviderPage from '@/components/pages/users-page/ProviderPage.vue';
+import AddService from '@/components/pages/users-page/AddService.vue';
 import UserProfile from '@/components/pages/UserProfile.vue';
 import UserDetails from '../components/pages/users-page/UserDetails.vue';
 import ServiceDetaile from '@/components/pages/ServiceDetaile.vue';
@@ -42,7 +42,7 @@ const router = new Router({
         {
             name: 'provider',
             path: '/addservice',
-            component: ProviderPage,
+            component: AddService,
             meta :{ 
                 authorize:['admin', 'provider']
             }

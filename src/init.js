@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue"
 import Router from 'vue-router';
 import VueToast from 'vue-toast-notification';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import 'vuetify/dist/vuetify.min.css'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -13,3 +14,5 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin)
 Vue.use(Router);
 Vue.use(VueToast);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)

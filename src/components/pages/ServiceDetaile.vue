@@ -43,19 +43,15 @@
                     <span class="text-danger"><s>&#8377; {{ item.price * 1.5 }}</s></span>&nbsp;
                     <em class="text-secondary">exclusive gst</em>
                   </div>
-                  <router-link
-                  :to="{name:'bookservice', path:'/bookservice',params:{id:item._id}}"
-                  >
                   <div class="d-flex flex-column mt-4">
                     <button class="btn btn-outline-primary btn-sm mt-2"  
                     type="button"
+                    @click.prevent="bookService(item._id)"
                     >
                       Book Service
                     </button>
                   </div>
-                </router-link>
-                </div>
-                
+              </div>
               </div>
             </div>
           </div>
@@ -68,6 +64,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import {getAllService} from '@/services/service';
 export default {
     name:'ServiceDetaile',
@@ -92,6 +89,21 @@ export default {
         this.loading = false;
       }
     },
+    methods:{
+      bookService(serviceId){
+        if (this.$store.state.auth.token!==''){
+          this.$router.push(`/bookservice/${serviceId}`);
+        }
+        else{
+          Vue.$toast.open({
+            type:'error',
+            message:'Please Login First',
+            position:'top'
+          })
+          this.$router.push('/login');
+        }
+      }
+    }
 }
 </script>
 
