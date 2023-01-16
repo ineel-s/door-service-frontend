@@ -10,56 +10,27 @@
                   <v-row>
                     <v-col cols="12" md="8">
                       <v-card-text class="mt-12">
-                        <h1
-                          class="
+                        <h1 class="
                             text-center
                             display-2
                             deep-purple--text
                             text--accent-3
-                          "
-                        >
+                          ">
                           Sign in
                         </h1>
                         <v-form @submit.prevent="onSignin">
-                          <validation-provider
-                            v-slot="{ errors }"
-                            name="email"
-                            rules="required|email"
-                          >
-                            <v-text-field
-                              v-model="email"
-                              :error-messages="errors"
-                              label="Email"
-                              prepend-icon="email"
-                              type="text"
-                              color="input-group--focused"
-                            />
+                          <validation-provider v-slot="{ errors }" name="email" rules="required|email">
+                            <v-text-field v-model="email" :error-messages="errors" label="Email" prepend-icon="email"
+                              type="text" color="input-group--focused" />
                           </validation-provider>
-                          <validation-provider
-                            v-slot="{ errors }"
-                            name="password"
-                            rules="required|min:8"
-                          >
-                            <v-text-field
-                              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                              v-model="password"
-                              :error-messages="errors"
-                              :type="show ? 'text' : 'password'"
-                              prepend-icon="lock"
-                              label="Password"
-                              class="input-group--focused"
-                              @click:append="show = !show"
-                            ></v-text-field>
+                          <validation-provider v-slot="{ errors }" name="password" rules="required|min:8">
+                            <v-text-field :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" v-model="password"
+                              :error-messages="errors" :type="show ? 'text' : 'password'" prepend-icon="lock"
+                              label="Password" class="input-group--focused" @click:append="show = !show"></v-text-field>
                           </validation-provider>
                           <a class="text-left m-4">Forgot password</a>
                           <div class="text-center mt-3">
-                            <v-btn
-                              rounded
-                              color="deep-purple accent-3"
-                              type="submit"
-                              dark
-                              >SIGN IN</v-btn
-                            >
+                            <v-btn rounded color="deep-purple accent-3" type="submit" dark>SIGN IN</v-btn>
                           </div>
                         </v-form>
                       </v-card-text>
@@ -72,9 +43,7 @@
                         </h5>
                       </v-card-text>
                       <div class="text-center">
-                        <v-btn rounded outlined dark @click="step++"
-                          >SIGN UP</v-btn
-                        >
+                        <v-btn rounded outlined dark @click="step++">SIGN UP</v-btn>
                       </div>
                     </v-col>
                   </v-row>
@@ -95,136 +64,62 @@
                         </h5>
                       </v-card-text>
                       <div class="text-center">
-                        <v-btn rounded outlined dark @click="step--"
-                          >Sign in</v-btn
-                        >
+                        <v-btn rounded outlined dark @click="step--">Sign in</v-btn>
                       </div>
                     </v-col>
                     <v-col cols="12" md="8">
                       <v-card-text class="mt-12">
-                        <h1
-                          class="
+                        <h1 class="
                             text-center
                             display-2
                             deep-purple--text
                             text--accent-3
-                          "
-                        >
+                          ">
                           Create Account
                         </h1>
                         <v-form @submit.prevent="onSignup">
                           <validation-observer>
-                            <validation-provider
-                              v-slot="{ errors }"
-                              name="Name"
-                              rules="required|min:3"
-                            >
-                              <v-text-field
-                                v-model="name"
-                                :error-messages="errors"
-                                label="Name"
-                                prepend-icon="person"
-                                type="text"
-                                color="deep-purple accent-3"
-                              />
+                            <validation-provider v-slot="{ errors }" name="Name" rules="required|min:3">
+                              <v-text-field v-model="name" :error-messages="errors" label="Name" prepend-icon="person"
+                                type="text" color="deep-purple accent-3" />
                             </validation-provider>
-                            <validation-provider
-                              v-slot="{ errors }"
-                              name="Email"
-                              rules="required|email"
-                            >
-                              <v-text-field
-                                v-model="email"
-                                :error-messages="errors"
-                                label="Email"
-                                prepend-icon="email"
-                                type="text"
-                                color="input-group--focused"
-                              />
+                            <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
+                              <v-text-field v-model="email" :error-messages="errors" label="Email" prepend-icon="email"
+                                type="text" color="input-group--focused" />
                             </validation-provider>
-                            <validation-provider
-                              v-slot="{ errors }"
-                              name="password"
-                              :rules="{
-                                required: true,
-                                regex:
-                                  '^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$',
-                              }"
-                            >
-                              <v-text-field
-                                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                                v-model="password"
-                                :error-messages="errors"
-                                :type="show ? 'text' : 'password'"
-                                prepend-icon="lock"
-                                label="Password"
-                                class="input-group--focused"
-                                @click:append="show = !show"
-                              />
+                            <validation-provider v-slot="{ errors }" name="password" :rules="{
+                              required: true,
+                              regex:
+                                '^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$',
+                            }">
+                              <v-text-field :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" v-model="password"
+                                :error-messages="errors" :type="show ? 'text' : 'password'" prepend-icon="lock"
+                                label="Password" class="input-group--focused" @click:append="show = !show" />
                             </validation-provider>
-                            <validation-provider
-                              v-slot="{ errors }"
-                              name="Phone Number"
-                              :rules="{
-                                required: true,
-                                digits: 10,
-                                regex: '^(6|7|8|9)\\d{9}$',
-                              }"
-                            >
-                              <v-text-field
-                                v-model="phoneNumber"
-                                :error-messages="errors"
-                                prepend-icon="phone"
-                                type="number"
-                                :counter="10"
-                                label="Phone Number"
-                                class="input-group--focused"
-                              />
+                            <validation-provider v-slot="{ errors }" name="Phone Number" :rules="{
+                              required: true,
+                              digits: 10,
+                              regex: '^(6|7|8|9)\\d{9}$',
+                            }">
+                              <v-text-field v-model="phoneNumber" :error-messages="errors" prepend-icon="phone"
+                                type="number" :counter="10" label="Phone Number" class="input-group--focused" />
                             </validation-provider>
-                            <v-select
-                              :items="items"
-                              v-model="gender"
-                              prepend-icon="fa-venus-mars"
-                              label="Gender"
-                              required
-                            ></v-select>
-                            <validation-provider
-                              v-slot="{ errors }"
-                              name="Address"
-                              rules="required|max:140"
-                            >
-                              <v-text-field
-                                v-model="address"
-                                :error-messages="errors"
-                                prepend-icon="fa-address-card"
-                                type="text"
-                                :counter="140"
-                                label="Address"
-                                class="input-group--focused"
-                              />
+                            <v-select :items="items" v-model="gender" prepend-icon="fa-venus-mars" label="Gender"
+                              required></v-select>
+                            <validation-provider v-slot="{ errors }" name="Address" rules="required|max:140">
+                              <v-text-field v-model="address" :error-messages="errors" prepend-icon="fa-address-card"
+                                type="text" :counter="140" label="Address" class="input-group--focused" />
                             </validation-provider>
                             <v-container fluid>
                               <v-radio-group v-model="role" row>
-                                <v-radio
-                                  label="customer"
-                                  value="customer"
-                                ></v-radio>
-                                <v-radio
-                                  label="provider"
-                                  value="provider"
-                                ></v-radio>
+                                <v-radio label="customer" value="customer"></v-radio>
+                                <v-radio label="provider" value="provider"></v-radio>
                               </v-radio-group>
                             </v-container>
                           </validation-observer>
 
                           <div class="text-center mt-4">
-                            <v-btn
-                              rounded
-                              color="deep-purple accent-3"
-                              type="submit"
-                              dark
-                              >SIGN UP</v-btn
-                            >
+                            <v-btn rounded color="deep-purple accent-3" type="submit" dark>SIGN UP</v-btn>
                           </div>
                         </v-form>
                       </v-card-text>
@@ -309,35 +204,37 @@ export default {
       role: "",
     };
   },
-  
+
   methods: {
     async onSignin() {
       const loginDetails = {
         email: this.email,
         password: this.password,
       };
-      if (this.email == "" && this.password == "") {
-        Vue.$toast.open({
-          type: "error",
-          message: "Please fill Entries",
-          position: "top",
-        });
-      }
+
       try {
-        const login = await this.$store.dispatch("loginUser", loginDetails);
-      if (login) {
-        Vue.$toast.open({
-          message: "logged In",
-          type: "success",
-        });
-        this.$router.push("/");
-      }  
+        if (this.email === '' || this.password === '') {
+          Vue.$toast.open({
+            type: "error",
+            message: "Please fill all required fields",
+            position: "top",
+          });
+        } else {
+          const login = await this.$store.dispatch("loginUser", loginDetails);
+          if (login) {
+            Vue.$toast.open({
+              message: "logged In",
+              type: "success",
+            });
+            this.$router.push("/");
+          }
+        }
       } catch (error) {
         Vue.$toast.open({
-          message: error.message,
+          message: "Invalid Credentials",
           type: "error",
           position: "top",
-        }); 
+        });
       }
     },
     async onSignup() {
@@ -350,24 +247,34 @@ export default {
         address: this.address,
         role: this.role,
       };
-      console.log(signupDetails);
       const baseUrl = Config.baseUrl;
-      
+
       try {
-      const response = await axios.post(
-        `${baseUrl}/auth/register`,
-        signupDetails
-      );
-      console.log(response.data);
-        if (response) {
-        Vue.$toast.open({
-          message: "Signed up Successfully",
-          type: "succcess",
-          position: "bottom",
-        });
-        // this.$router.push("/login");
-        this.step = this.step-1;
-      }
+        if (this.name === '' ||
+          this.email === '' ||
+          this.password === '' ||
+          this.phoneNumber === '' ||
+          this.gender === '' ||
+          this.address === '' ||
+          this.role === '') {
+          Vue.$toast.open({
+            type: "error",
+            message: "Please fill all required fields",
+            position: "top",
+          });
+        } else {
+          console.log(signupDetails);
+          const response = await axios.post(`${baseUrl}/auth/register`, signupDetails);
+          console.log(response.data);
+          if (response) {
+            Vue.$toast.open({
+              message: "Signed up Successfully",
+              type: "succcess",
+              position: "bottom",
+            });
+            this.step = this.step - 1;
+          }
+        }
       } catch (error) {
         Vue.$toast.open({
           message: error.message,
@@ -375,7 +282,7 @@ export default {
           position: "top",
         });
       }
-      
+
     },
   },
 };
@@ -383,11 +290,9 @@ export default {
 
 <style scoped>
 .bg-color {
-  background: linear-gradient(
-    to right,
-    rgba(132, 250, 179, 1),
-    rgba(143, 211, 244, 1)
-  );
+  background: linear-gradient(to right,
+      rgba(132, 250, 179, 1),
+      rgba(143, 211, 244, 1));
 }
 
 .b-radius {

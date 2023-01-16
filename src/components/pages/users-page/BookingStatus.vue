@@ -47,6 +47,11 @@
                   <div v-if="item.isCanceledBy">
                     <span>Cancelled By {{ item.isCanceledBy }}</span>
                   </div>
+                  <span>Booking Date : {{ item.bookingDate | formatDate }}</span>
+                  <div>
+
+                    <span>Booking Time : {{ item.bookingTime }}</span>
+                  </div>
                   <hr>
                   <p>
                     <span class="h6">Provider Name :</span> <span> {{ item.provider[0].name }}</span><br>

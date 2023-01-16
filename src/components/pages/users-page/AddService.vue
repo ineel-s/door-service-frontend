@@ -135,6 +135,17 @@ export default {
       };
       console.log(servicedetails);
       try {
+        if(this.name==='' && 
+        this.price==='' && 
+        this.serviceTime==='' &&
+        this.discription===''
+        ){
+          Vue.$toast.open({
+            type:'error',
+            message:'Please fill all required fields',
+            position:'top'
+          });
+        }else{
         const response = await registerService(servicedetails);
         console.log(response);
         Vue.$toast.open({
@@ -143,6 +154,7 @@ export default {
           position: "top-left",
         });
         this.$router.push("/services");
+      }
       } catch (error) {
         Vue.$toast.open({
           type: "error",

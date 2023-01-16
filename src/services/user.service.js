@@ -11,7 +11,7 @@ const loginUser = async(credentials)=>{
             'Content-Type':'application/json'
         },
     });
-    console.log(response.data);
+    // console.log(response.message);
     return response.data;
 }
 

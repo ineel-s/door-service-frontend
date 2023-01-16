@@ -44,11 +44,20 @@
                     <span v-else>
                         <span class="p-1  bg-info text-white"> {{ item.serviceStatus }}</span>
                     </span>
-                </p><br>
+                </p>
+                <div v-if="item.isCanceledBy">
+                    <span>Cancelled By {{ item.isCanceledBy }}</span>
+                  </div>
+                  <span>Booking Date : {{ item.bookingDate | formatDate }}</span>
+                  <div>
+
+                    <span>Booking Time : {{ item.bookingTime }}</span>
+                  </div>
+                <br>
                 <span class="p-1 bg-secondary text-white">Payment Status : {{ item.paymentStatus }}</span>
                   <hr>
                   <p>
-                    <span class="h6">Provider Name :</span> <span> {{ item.provider[0].name }}</span><br>
+                    <span class="h6">Customer Name :</span> <span> {{ item.userdetails[0].name }}</span><br>
                     <span class="h6">Address: &nbsp;</span> {{ item.serviceAddress }}
                   </p>
                 </div>
@@ -58,11 +67,11 @@
                                         </div>
                                     <em class="text-secondary">( &#8377;{{ item.service[0].price }} + &#8377;{{ item.service[0].price*.18 }} gst )</em>
 
-                                    <div class="d-flex flex-column mt-4">
+                  <div class="d-flex flex-column mt-4">
                     <button class="btn btn-outline-success btn-sm mt-2"  
                     type="button"
                     v-on:click="acceptService(item._id)"
-                    :disabled="false"
+                    :disabled="item.serviceStatus=='Accepted' || 'Cancelled'?'' :disabled"
                     >
                     Accept Request
                     </button>
@@ -71,7 +80,7 @@
                     <button class="btn btn-outline-danger btn-sm mt-2"  
                     type="button"
                     v-on:click="cancelService(item._id)"
-                    :disabled="false"
+                    :disabled="item.serviceStatus=='Accepted' || 'Cancelled'?'' :disabled"
                     >
                     Cancel Request
                     </button>

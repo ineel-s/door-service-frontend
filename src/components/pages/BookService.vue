@@ -138,26 +138,24 @@
                               />
                             </validation-provider>
                             <validation-provider
-                              v-slot="{ errors }"
+                              v-slot="{  }"
                               name="paymentStatus"
                               rules="required"
                             >
-                              <b-form-select
-                                v-model="paymentStatus"
-                                :error-messages="errors"
-                                class="mb-3"
-                              >
-                                <b-form-select-option value="Pending" disabled
-                                  >Please select payement
-                                  mode</b-form-select-option
-                                >
-                                <b-form-select-option value="C.O.D"
-                                  >Cash on delivery</b-form-select-option
-                                >
-                                <b-form-select-option value="null" disabled
-                                  >Pay Now</b-form-select-option
-                                >
-                              </b-form-select>
+                          
+    <v-radio-group
+      v-model="paymentStatus"
+      row
+    >
+      <v-radio
+        label=" C.O.D"
+        value="C.O.D"
+      ></v-radio>
+      <v-radio
+        label="Pay Now"
+        value="PayNow"
+      ></v-radio>
+    </v-radio-group>
                             </validation-provider>
                           </validation-observer>
                           <v-divider class="mt-12"></v-divider>
@@ -254,10 +252,24 @@ export default {
       console.log(bookingDetails);
       try {
         console.log(this.userID);
+        if(this.bookingDate==='' && this.bookingTime==='' && this.serviceAddress===''){
+          Vue.$toast.open({
+            type:"error",
+            message:"Please Fill All required Details",
+            position:'top',
+          });
+        }else{
         const booking = await bookService(this.userID, bookingDetails);
         console.log(booking.data);
+        if(this.paymentStatus=='PayNow'){
+          this.$router.push("/payment")
+        }
+
+        else{
         Vue.$toast.open("Service booked");
         this.$router.push("/bookingstatus");
+        }
+        }
       } catch (error) {
         Vue.$toast.open({
           type: "error",
