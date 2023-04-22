@@ -10,7 +10,7 @@ import ServiceDetaile from '@/components/pages/ServiceDetaile.vue';
 import SingleUser from '@/components/pages/users-page/SingleUser.vue';
 import BookService from '@/components/pages/BookService.vue';
 import ProviderAssigned from '@/components/pages/ProviderAssigned.vue';
-import StripePayment from '@/components/pages/StripePayment.vue'
+
 
 const meta = {
     authorize: [ 'admin', 'customer' ,'provider']
@@ -94,11 +94,6 @@ const router = new Router({
             meta:{
                 authorize:['admin','provider']
             }
-        },
-        {
-            name:'stripepayment',
-            path:'/payment',
-            component:StripePayment
         }
     ]
 });

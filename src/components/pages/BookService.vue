@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <v-app>
     <div class="container py-5">
       <div class="alert alert-danger" role="alert" v-if="error">
         {{ error.message }}
@@ -7,8 +7,8 @@
       <div v-if="!error && items.length !== 0">
         <div class="row justify-content-center mb-3">
           <div class="col-md-12 col-xl-10">
-            <div class="card shadow-0 border rounded-3">
-              <div class="card-body">
+            <div class="card shadow-0 border back rounded-3">
+              <div class="card-body ">
                 <div class="row">
                   <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                     <div
@@ -66,11 +66,11 @@
                     </div>
                     <div class="d-flex flex-row align-items-center mb-1">
                       <h4 class="mb-1 me-1">
-                        Total = &#8377; {{ items.price * 1.18 }} &nbsp;
+                        Total = &#8377; {{ items.price * 1.08 }} &nbsp;
                       </h4>
                       <em class="text-secondary"
                         >&#8377;{{ items.price }} + &#8377;{{
-                          items.price * 0.18
+                          items.price * 0.08
                         }}
                         gst</em
                       >
@@ -138,30 +138,49 @@
                               />
                             </validation-provider>
                             <validation-provider
-                              v-slot="{  }"
                               name="paymentStatus"
                               rules="required"
                             >
-                          
-    <v-radio-group
-      v-model="paymentStatus"
-      row
-    >
-      <v-radio
-        label=" C.O.D"
-        value="C.O.D"
-      ></v-radio>
-      <v-radio
-        label="Pay Now"
-        value="PayNow"
-      ></v-radio>
-    </v-radio-group>
+                              <v-radio-group v-model="paymentStatus" row>
+                                <v-radio label=" C.O.D" value="C.O.D"></v-radio>
+                                <v-radio
+                                  label="Online Payment"
+                                  value="Pending"
+                                ></v-radio>
+                              </v-radio-group>
                             </validation-provider>
                           </validation-observer>
+
                           <v-divider class="mt-12"></v-divider>
-                          <v-btn color="primary" text type="submit">
-                            Book Now
-                          </v-btn>
+                          <div v-if="this.paymentStatus == 'Pending'">
+                            <stripe-checkout
+                              ref="checkoutRef"
+                              mode="payment"
+                              :pk="publishableKey"
+                              :lineItems="lineItems"
+                              :success-url="successURL"
+                              :cancel-url="cancelURL"
+                              @loading="(v) => (loading = v)"
+                            />
+                            <v-btn
+                              rounded
+                              color="deep-purple accent-3"
+                              type="submit"
+                              dark
+                            >
+                              Proceed with Online Payment
+                            </v-btn>
+                          </div>
+                          <div v-else-if="this.paymentStatus == 'C.O.D'">
+                            <v-btn
+                              rounded
+                              color="deep-purple accent-3"
+                              type="submit"
+                              dark
+                            >
+                              Proceed With COD
+                            </v-btn>
+                          </div>
                         </v-form>
                       </v-card-text>
                     </v-card>
@@ -173,11 +192,12 @@
         </div>
       </div>
     </div>
-  </section>
+  </v-app>
 </template>
 
 <script>
 import Vue from "vue";
+
 import { getprebookingService } from "@/services/service";
 import { bookService } from "@/services/bookings";
 import { required, max } from "vee-validate/dist/rules";
@@ -187,6 +207,7 @@ import {
   ValidationObserver,
   setInteractionMode,
 } from "vee-validate";
+import { StripeCheckout } from "@vue-stripe/vue-stripe";
 
 setInteractionMode("eager");
 
@@ -198,14 +219,16 @@ extend("max", {
   ...max,
   message: "{_field_} may not be greater than {length} characters",
 });
-
+import Config from "@/config";
 export default {
   name: "BookService",
   components: {
     ValidationObserver,
     ValidationProvider,
+    StripeCheckout,
   },
   data() {
+    this.publishableKey = 'pk_test_51MQcneSJ9A0k3bp1svEbGjQmjx06hMCxwmDZv55PVn2hRdh49E3Yba3RODIdM271nYKr6hmXnQ3YAwytFKlQUuqA00k0XDmmYT';
     return {
       id: "",
       items: [],
@@ -218,6 +241,16 @@ export default {
       providerID: "",
       serviceID: "",
       userID: this.$store.state.auth.id,
+
+      loading: false,
+        lineItems: [
+          {
+            price:'',
+            quantity: 1,
+          },
+        ],
+        successURL: `${Config.baseUrl}/bookingstatus`,
+        cancelURL: `${Config.baseUrl}`,
     };
   },
   async mounted() {
@@ -230,6 +263,7 @@ export default {
         if (service.data[i]._id === this.id) {
           this.items = service.data[i];
           console.log(this.items);
+          this.lineItems[0].price = this.items.stripePrice;
         }
       }
     } catch (error) {
@@ -241,34 +275,50 @@ export default {
       this.providerID = this.items.providerID;
       console.log(this.providerID);
       console.log(this.userID);
+      //Provider can not book own service
+      if (this.providerID==this.userID) {
+        Vue.$toast.open({
+          type:"error",
+          message: "Provider can not book own services!",
+          position:"top"
+        });
+      }
+      else
+      {
       const bookingDetails = {
         serviceID: this.id,
         providerID: this.items.providerID,
         bookingDate: this.bookingDate,
         bookingTime: this.bookingTime,
-        serviceAddress: this.serviceAddress,
-        paymentStatus: this.paymentStatus,
+        serviceAddress: this.serviceAddress
       };
       console.log(bookingDetails);
       try {
         console.log(this.userID);
-        if(this.bookingDate==='' && this.bookingTime==='' && this.serviceAddress===''){
+        if (
+          this.bookingDate === "" ||
+          this.bookingTime === "" ||
+          this.serviceAddress === ""
+        ) {
           Vue.$toast.open({
-            type:"error",
-            message:"Please Fill All required Details",
-            position:'top',
+            type: "error",
+            message: "Please Fill All required Details",
+            position: "top",
           });
-        }else{
-        const booking = await bookService(this.userID, bookingDetails);
-        console.log(booking.data);
-        if(this.paymentStatus=='PayNow'){
-          this.$router.push("/payment")
-        }
-
-        else{
-        Vue.$toast.open("Service booked");
-        this.$router.push("/bookingstatus");
-        }
+        } else {
+          if (this.paymentStatus == "Pending") {
+            const bookingWithpayment = {
+              paymentStatus:'Successfull',
+              ...bookingDetails
+            }
+            const booking = await bookService(this.userID, bookingWithpayment);
+            console.log(booking.data);
+            this.$refs.checkoutRef.redirectToCheckout();
+          }
+          else {
+            Vue.$toast.open("Service booked");
+            this.$router.push("/bookingstatus"); 
+          }
         }
       } catch (error) {
         Vue.$toast.open({
@@ -277,6 +327,7 @@ export default {
           position: "top",
         });
       }
+    }
     },
   },
 };

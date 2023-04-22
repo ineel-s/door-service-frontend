@@ -10,6 +10,7 @@ return response.data;
 const bookService = async (id , bookingdetails)=>{
     const response = await axios.post(`${Config.baseUrl}/bookingservice/${id}`, bookingdetails);
     console.log(response);
+    console.log(response.message);
     return response;
 };
 

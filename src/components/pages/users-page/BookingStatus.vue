@@ -10,7 +10,7 @@
       {{ error.message }}
     </div>
     <div v-if="!loading && !error && items.length !==0">
-      <div v-for="item in items" :key="item.id">
+       <div v-for=" (item, i) in items.slice().reverse()" :key="i" >
       <div class="row justify-content-center mb-3">
         <div class="col-md-12 col-xl-10">
           <div class="card shadow-0 border rounded-3">
@@ -38,10 +38,25 @@
                         <span class="bg-danger text-white"> {{ item.serviceStatus }}</span>
                     </span>
                     <span v-else-if="item.serviceStatus==='Accepted'">
-                        <span class="p-1 bg-warning text-white"> {{ item.serviceStatus }}</span>
+                        <span class="bg-warning text-white"> {{ item.serviceStatus }}</span>
                     </span>
                     <span v-else>
                         <span class="bg-info text-white"> {{ item.serviceStatus }}</span>
+                    </span>
+                  </p>
+                  <p class="mb-4 mb-md-0 ">
+                    Payment Status :
+                    <span v-if="item.paymentStatus==='Successfull'">
+                        <span class="bg-success text-white"> {{ item.paymentStatus }}</span>
+                    </span>
+                    <span v-else-if="item.paymentStatus==='Failed'">
+                        <span class="bg-danger text-white"> {{ item.paymentStatus }}</span>
+                    </span>
+                    <span v-else-if="item.paymentStatus==='C.O.D'">
+                        <span class="bg-warning text-white"> {{ item.paymentStatus }}</span>
+                    </span>
+                    <span v-else>
+                        <span class="bg-info text-white"> {{ item.paymentStatus }}</span>
                     </span>
                   </p>
                   <div v-if="item.isCanceledBy">
@@ -62,7 +77,7 @@
                   <div class="d-flex flex-row align-items-center mb-1">
                                             <h4 class="mb-1 me-1">Total = &#8377; {{ item.serviceCost }} &nbsp; </h4> 
                                         </div>
-                                    <em class="text-secondary">( &#8377;{{ item.service[0].price }} + &#8377;{{ item.service[0].price*.18 }} gst )</em>
+                                    <em class="text-secondary">( &#8377;{{ item.service[0].price }} + &#8377;{{ item.service[0].price*.08 }} gst )</em>
                   <div class="d-flex flex-column mt-4">
                     <button class="btn btn-outline-danger btn-sm mt-2"  
                     type="button"
@@ -116,6 +131,7 @@ import {updateBooking} from '@/services/bookings'
                 }
             }
             console.log(this.items);
+
         } catch (error) {
             this.error=error;
         }finally{

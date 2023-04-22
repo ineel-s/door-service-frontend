@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <h2 align="center">Register New Service</h2>
-    <v-main>
+    <v-app>
+
     <v-row >
       <v-col>
         <v-card ref="form" class="p-4">
@@ -18,7 +19,6 @@
                                 :error-messages="errors"
                                 label="Service Name"
                                 type="text"
-                                color="deep-purple accent-3"
                               />
                             </validation-provider>
                             <validation-provider
@@ -34,16 +34,13 @@
                             class="input-group--focused"
                             />
                           </validation-provider>
-                          <div class="d-flex align-center">
-        <span class="text-muted">Category</span>
-        <b-form-select
-          class="ml-5"
-          v-model="categoryID"
-          :options="options"
-          value-field="_id"
-          text-field="name"
-        ></b-form-select>
-      </div>
+                         <v-select :items="options"
+                            item-text ="name"
+                            item-value="_id"
+                            v-model="categoryID" 
+                            :rules="[v => !!v || 'Item is required']" 
+                            label="Category"
+                            required></v-select>
                             <validation-provider
                             v-slot={errors}
                             name="Discription"
@@ -74,14 +71,14 @@
                           </validation-observer>
 
       
-      <div class="text-center mt-4">
-        <v-btn rounded color="deep-purple accent-3" type="submit">Register</v-btn>
+      <div class="text-center text-color-white mt-4">
+        <v-btn rounded color="deep-purple accent-3"  type="submit" dark>Register</v-btn>
       </div>
     </form>
     </v-card>
     </v-col>
     </v-row>
-  </v-main>
+  </v-app>
   </div>
 </template>
 

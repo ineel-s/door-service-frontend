@@ -14,7 +14,7 @@
       <div class="row justify-content-center mb-3">
         <div class="col-md-12 col-xl-10">
           <div class="card shadow-0 border rounded-3">
-            <div class="card-body">
+            <div class="card-body back">
               <div class="row">
                 <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                   <div class="bg-image hover-zoom ripple rounded ripple-surface">
@@ -58,6 +58,7 @@
                   <hr>
                   <p>
                     <span class="h6">Customer Name :</span> <span> {{ item.userdetails[0].name }}</span><br>
+                    <span class="h6">Contact No. :</span> <span> +91{{ item.userdetails[0].phoneNumber }}</span><br>
                     <span class="h6">Address: &nbsp;</span> {{ item.serviceAddress }}
                   </p>
                 </div>
@@ -65,22 +66,31 @@
                   <div class="d-flex flex-row align-items-center mb-1">
                                             <h4 class="mb-1 me-1">Total = &#8377; {{ item.serviceCost }} &nbsp; </h4> 
                                         </div>
-                                    <em class="text-secondary">( &#8377;{{ item.service[0].price }} + &#8377;{{ item.service[0].price*.18 }} gst )</em>
-
-                  <div class="d-flex flex-column mt-4">
+                                    <em class="text-secondary">( &#8377;{{ item.service[0].price }} + &#8377;{{ item.service[0].price*.08 }} gst )</em>
+<div>
+                  <div v-if="item.serviceStatus!='Accepted'" class="d-flex flex-column mt-4">
                     <button class="btn btn-outline-success btn-sm mt-2"  
                     type="button"
                     v-on:click="acceptService(item._id)"
-                    :disabled="item.serviceStatus=='Accepted' || 'Cancelled'?'' :disabled"
+                    :disabled="item.serviceStatus=='Cancelled'?true:false"
                     >
                     Accept Request
                     </button>
+                  </div>
+                  <div v-else class="d-flex flex-column mt-4">
+                    <button class="btn btn-outline-success btn-sm mt-2"  
+                    type="button"
+                    v-on:click="completed(item._id)"
+                    >
+                    Service Served
+                    </button>
+                  </div>
                   </div>
                   <div class="d-flex flex-column mt-4">
                     <button class="btn btn-outline-danger btn-sm mt-2"  
                     type="button"
                     v-on:click="cancelService(item._id)"
-                    :disabled="item.serviceStatus=='Accepted' || 'Cancelled'?'' :disabled"
+                    :disabled="item.serviceStatus=='Cancelled'|| 'Success'?true:false"
                     >
                     Cancel Request
                     </button>
@@ -143,7 +153,6 @@ export default {
             isCanceledBy:this.$store.state.auth.role,
             serviceStatus:"Cancelled"
         }
-        console.log(updatedetails);
            if( window.confirm("Do you really want to cancel service?")){
             console.log("service Cancelled");
             const cancel = await updateBooking(_id,updatedetails);
@@ -157,15 +166,26 @@ export default {
         const updatedetails ={
             serviceStatus:"Accepted",
         }
-        console.log(updatedetails);
            if( window.confirm("Do you want to Accept service?")){
             console.log("Service Accepted");
-            const cancel = await updateBooking(_id,updatedetails);
-            console.log(cancel);
+            const accept = await updateBooking(_id,updatedetails);
+            console.log(accept);
             
            }   
         },
+        async completed(bookingID){
         
+        const _id = bookingID;
+        console.log(_id);
+        const updatedetails ={
+            serviceStatus:"Success",
+        }
+           if( window.confirm("Service Served Successfully?")){
+            console.log("Service Success");
+            const success = await updateBooking(_id,updatedetails);
+            console.log(success);
+           }   
+        },
       }
 
 }

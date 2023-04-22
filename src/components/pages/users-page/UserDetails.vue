@@ -87,11 +87,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 20px;
+  padding: 10px;
 }
 
 .container1 .box {
-  width: calc(33%-10px);
+  width: calc(32.2%);
   background: linear-gradient(to right bottom, rgb(101, 159, 246), rgba(253, 160, 133, 1));
   display: flex;
   flex-direction: column;
@@ -99,7 +99,7 @@ export default {
   align-items: center;
   padding: 20px 30px;
   border-radius: 10px;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 
 .container1 .box .image {

@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <v-app>
   <div class="container py-5">
     <div class="d-flex justify-content-center" v-if="loading">
       <div class="spinner-border" role="status">
@@ -14,7 +14,7 @@
       <div class="row justify-content-center mb-3">
         <div class="col-md-12 col-xl-10">
           <div class="card shadow-0 border rounded-3">
-            <div class="card-body">
+            <div class="card-body back ">
               <div class="row">
                 <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                   <div class="bg-image hover-zoom ripple rounded ripple-surface">
@@ -58,9 +58,11 @@
           </div>
         </div>
     </div>
+    
     </div>
+    
   </div>
-</section>
+    </v-app>
 </template>
 
 <script>
@@ -108,6 +110,7 @@ export default {
 </script>
 
 <style scoped>
+
 @media (max-width: 767.98px) {
    .border-sm-start-none { 
     border-left: none !important; 

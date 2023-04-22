@@ -35,7 +35,8 @@
           </tr>
         </thead>
 
-        <tbody v-for="item in items" :key="item.id">
+        <tbody v-for=" (item, i) in items.slice().reverse()" :key="i">
+          
           <tr>
             <td class="pt-3-half" contenteditable="false">{{ item.userdetails[0].name }}</td>
             <td class="pt-3-half" contenteditable="true">{{item.provider[0].name}}</td>

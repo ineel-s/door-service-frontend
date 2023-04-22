@@ -39,10 +39,10 @@
                       <v-card-text class="white--text mt-12">
                         <h1 class="text-center display-1">Hey!</h1>
                         <h5 class="text-center">
-                          Enter your personal details and start journay with us
+                          Enter your personal details and request for your home service
                         </h5>
                       </v-card-text>
-                      <div class="text-center">
+                      <div class="text-center mb-2">
                         <v-btn rounded outlined dark @click="step++">SIGN UP</v-btn>
                       </div>
                     </v-col>

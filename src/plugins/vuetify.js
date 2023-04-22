@@ -14,11 +14,9 @@ export default new Vuetify(
           },
           theme: {
             themes: {
-                light: {
-                    background: colors.grey.lighten2, // Not automatically applied
-                  },
+               
               dark: {
-                background: colors.shades.white, // If not using lighten/darken, use base to return hex
+                background: colors.shades.grey, // If not using lighten/darken, use base to return hex
               },
             },
           },

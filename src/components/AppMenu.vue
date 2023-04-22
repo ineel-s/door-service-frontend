@@ -33,6 +33,7 @@
           <b-button size="sm" class="my-2 my-sm-0 button" type="submit">Search</b-button>
         </b-nav-form> -->
         <b-nav-item
+          class="my-2"
           v-if="this.$store.state.auth.token==''"  
           href="/login">Login</b-nav-item>
           <b-nav-item-dropdown
@@ -40,7 +41,7 @@
           right>
 
             <template #button-content>
-              <v-avatar color="indigo">
+              <v-avatar>
                 <v-icon dark>
                   mdi-account-circle
                 </v-icon>
@@ -49,6 +50,10 @@
             <b-dropdown-item @click.prevent="profile">Profile</b-dropdown-item>
             <b-dropdown-item @click.prevent="SignOut">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
+          <v-switch
+            v-model="$vuetify.theme.dark"
+            persistent-hint
+      ></v-switch>
         </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -79,6 +84,9 @@ export default {
 </script>
 
 <style>
+.back{
+   /* background-color: #a4ccf4; */
+}
 
 .bg-info.ds-nav{
   background-color: #6860a7 !important;

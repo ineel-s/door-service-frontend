@@ -1,8 +1,10 @@
 <template>
   <div id="app">
+    <v-app>
   <AppMenu />
     <router-view></router-view>
   <FooterPage></FooterPage>
+  </v-app>
   </div>
   
 </template>
