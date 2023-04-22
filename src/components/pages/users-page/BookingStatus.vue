@@ -32,31 +32,31 @@
                     Service time : <span class="text-info"> {{ item.service[0].serviceTime }}</span><br>
                     Status :
                     <span v-if="item.serviceStatus==='Success'">
-                        <span class="bg-success text-white"> {{ item.serviceStatus }}</span>
+                        <span class="p-1 rounded bg-success text-white"> {{ item.serviceStatus }}</span>
                     </span>
                     <span v-else-if="item.serviceStatus==='Cancelled'">
-                        <span class="bg-danger text-white"> {{ item.serviceStatus }}</span>
+                        <span class="p-1 rounded bg-danger text-white"> {{ item.serviceStatus }}</span>
                     </span>
                     <span v-else-if="item.serviceStatus==='Accepted'">
-                        <span class="bg-warning text-white"> {{ item.serviceStatus }}</span>
+                        <span class="p-1 rounded bg-warning text-white"> {{ item.serviceStatus }}</span>
                     </span>
                     <span v-else>
-                        <span class="bg-info text-white"> {{ item.serviceStatus }}</span>
+                        <span class="p-1 rounded bg-info text-white"> {{ item.serviceStatus }}</span>
                     </span>
                   </p>
                   <p class="mb-4 mb-md-0 ">
                     Payment Status :
                     <span v-if="item.paymentStatus==='Successfull'">
-                        <span class="bg-success text-white"> {{ item.paymentStatus }}</span>
+                        <span class="rounded bg-success text-white"> {{ item.paymentStatus }}</span>
                     </span>
                     <span v-else-if="item.paymentStatus==='Failed'">
-                        <span class="bg-danger text-white"> {{ item.paymentStatus }}</span>
+                        <span class="rounded bg-danger text-white"> {{ item.paymentStatus }}</span>
                     </span>
                     <span v-else-if="item.paymentStatus==='C.O.D'">
-                        <span class="bg-warning text-white"> {{ item.paymentStatus }}</span>
+                        <span class="rounded bg-warning text-white"> {{ item.paymentStatus }}</span>
                     </span>
                     <span v-else>
-                        <span class="bg-info text-white"> {{ item.paymentStatus }}</span>
+                        <span class="rounded bg-info text-white"> {{ item.paymentStatus }}</span>
                     </span>
                   </p>
                   <div v-if="item.isCanceledBy">
@@ -78,7 +78,21 @@
                                             <h4 class="mb-1 me-1">Total = &#8377; {{ item.serviceCost }} &nbsp; </h4> 
                                         </div>
                                     <em class="text-secondary">( &#8377;{{ item.service[0].price }} + &#8377;{{ item.service[0].price*.08 }} gst )</em>
-                  <div class="d-flex flex-column mt-4">
+                <div v-if="item.serviceStatus=='Cancelled'" class="bg-image ripple rounded ripple-surface">
+                    <img src="@/image/cancle.png"
+                      class="w-50" />
+                    <a href="#!">
+                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                    </a>
+                    </div>
+                   <div v-else-if="item.serviceStatus=='Success'" class="bg-image ripple rounded ripple-surface">
+                    <img src="@/image/success.png"
+                      class="w-50" />
+                    <a href="#!">
+                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                    </a>
+                  </div> 
+                    <div v-else class="d-flex flex-column mt-4">
                     <button class="btn btn-outline-danger btn-sm mt-2"  
                     type="button"
                     v-on:click="cancelService(item._id)"
@@ -87,6 +101,7 @@
                     Cancel Service
                     </button>
                   </div>
+                
                 </div>
                 
               </div>

@@ -10,7 +10,7 @@
       {{ error.message }}
     </div>
     <div v-if="!loading && !error && items.length !==0">
-      <div v-for="item in items" :key="item.id">
+      <div v-for=" (item, i) in items.slice().reverse()" :key="i">
       <div class="row justify-content-center mb-3">
         <div class="col-md-12 col-xl-10">
           <div class="card shadow-0 border rounded-3">
@@ -32,7 +32,7 @@
                     Service time : <span class="text-info"> {{ item.service[0].serviceTime }}</span><br>
                     Status :
                     <span v-if="item.serviceStatus==='Success'">
-                        <span class="p-1 bg-success text-white">
+                        <span class="p-1 rounded bg-success text-white ">
                              {{ item.serviceStatus }}</span>
                     </span>
                     <span v-else-if="item.serviceStatus==='Cancelled'">
@@ -42,9 +42,25 @@
                         <span class="p-1 bg-warning text-white"> {{ item.serviceStatus }}</span>
                     </span>
                     <span v-else>
-                        <span class="p-1  bg-info text-white"> {{ item.serviceStatus }}</span>
+                        <span class="p-1 bg-info text-white"> {{ item.serviceStatus }}</span>
                     </span>
                 </p>
+                <p class="mb-4 mb-md-0 ">
+                    Payment Status :
+                    <span v-if="item.paymentStatus==='Successfull'">
+                        <span class="bg-success text-white"> {{ item.paymentStatus }}</span>
+                    </span>
+                    <span v-else-if="item.paymentStatus==='Failed'">
+                        <span class="bg-danger text-white"> {{ item.paymentStatus }}</span>
+                    </span>
+                    <span v-else-if="item.paymentStatus==='C.O.D'">
+                        <span class="bg-warning text-white"> {{ item.paymentStatus }}</span>
+                    </span>
+                    <span v-else>
+                        <span class="bg-info text-white"> {{ item.paymentStatus }}</span>
+                    </span>
+                  </p>
+
                 <div v-if="item.isCanceledBy">
                     <span>Cancelled By {{ item.isCanceledBy }}</span>
                   </div>
@@ -52,10 +68,9 @@
                   <div>
 
                     <span>Booking Time : {{ item.bookingTime }}</span>
-                  </div>
-                <br>
-                <span class="p-1 bg-secondary text-white">Payment Status : {{ item.paymentStatus }}</span>
-                  <hr>
+                </div>
+                
+                <hr>
                   <p>
                     <span class="h6">Customer Name :</span> <span> {{ item.userdetails[0].name }}</span><br>
                     <span class="h6">Contact No. :</span> <span> +91{{ item.userdetails[0].phoneNumber }}</span><br>
@@ -68,7 +83,7 @@
                                         </div>
                                     <em class="text-secondary">( &#8377;{{ item.service[0].price }} + &#8377;{{ item.service[0].price*.08 }} gst )</em>
 <div>
-                  <div v-if="item.serviceStatus!='Accepted'" class="d-flex flex-column mt-4">
+                  <div v-if="item.serviceStatus=='Requested'" class="d-flex flex-column mt-4">
                     <button class="btn btn-outline-success btn-sm mt-2"  
                     type="button"
                     v-on:click="acceptService(item._id)"
@@ -76,26 +91,41 @@
                     >
                     Accept Request
                     </button>
-                  </div>
-                  <div v-else class="d-flex flex-column mt-4">
-                    <button class="btn btn-outline-success btn-sm mt-2"  
-                    type="button"
-                    v-on:click="completed(item._id)"
-                    >
-                    Service Served
-                    </button>
-                  </div>
-                  </div>
-                  <div class="d-flex flex-column mt-4">
                     <button class="btn btn-outline-danger btn-sm mt-2"  
                     type="button"
                     v-on:click="cancelService(item._id)"
-                    :disabled="item.serviceStatus=='Cancelled'|| 'Success'?true:false"
+                    :disabled="item.serviceStatus=='Cancelled'?true:false"
                     >
                     Cancel Request
                     </button>
                   </div>
+                  <div v-else-if="item.serviceStatus=='Accepted'" class="d-flex flex-column mt-4">
+                    <button class="btn btn-outline-success btn-sm mt-2"  
+                    type="button"
+                    v-on:click="completed(item._id)"
+                    :disabled="item.serviceStatus=='Success'?true:false"
+                    >
+                    Service Served
+                    </button>
+                  </div>
+                  <div v-else-if="item.serviceStatus=='Cancelled'" class="bg-image ripple rounded ripple-surface">
+                    <img src="@/image/cancle.png"
+                      class="w-50" />
+                    <a href="#!">
+                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                    </a>
+                  </div>
+                  
+                    <div v-else class="bg-image ripple rounded ripple-surface">
+                    <img src="@/image/success.png"
+                      class="w-50" />
+                    <a href="#!">
+                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                    </a>
+                  </div>
                 </div>
+                  </div>
+                 
                 
               </div>
             </div>
@@ -157,7 +187,8 @@ export default {
             console.log("service Cancelled");
             const cancel = await updateBooking(_id,updatedetails);
             console.log(cancel);
-           }   
+            window.location.reload();
+           }
         },
         async acceptService(bookingID){
         
@@ -170,8 +201,8 @@ export default {
             console.log("Service Accepted");
             const accept = await updateBooking(_id,updatedetails);
             console.log(accept);
-            
-           }   
+            window.location.reload();
+           }
         },
         async completed(bookingID){
         
@@ -184,13 +215,14 @@ export default {
             console.log("Service Success");
             const success = await updateBooking(_id,updatedetails);
             console.log(success);
-           }   
+            window.location.reload();
+           } 
         },
       }
 
 }
 </script>
 
-<style>
+<style >
 
 </style>

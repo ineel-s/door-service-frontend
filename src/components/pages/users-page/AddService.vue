@@ -56,21 +56,19 @@
                             </validation-provider>
                             <validation-provider
                             v-slot="{errors}"
-                            name="duration"
+                            name="Duration"
                             rules="required"
                             >
                               <v-text-field
+                                  hint="Please fill in hours Ex: 2 hours"
                                   v-model="serviceTime"
                                   :error-messages="errors"
-                                  type="time"
+                                  type="text"
                                   label="Service Duration"
                                 />
-
-
+                                
                             </validation-provider>
                           </validation-observer>
-
-      
       <div class="text-center text-color-white mt-4">
         <v-btn rounded color="deep-purple accent-3"  type="submit" dark>Register</v-btn>
       </div>
@@ -132,9 +130,9 @@ export default {
       };
       console.log(servicedetails);
       try {
-        if(this.name==='' && 
-        this.price==='' && 
-        this.serviceTime==='' &&
+        if(this.name==='' || 
+        this.price==='' ||
+        this.serviceTime==='' ||
         this.discription===''
         ){
           Vue.$toast.open({
