@@ -41,7 +41,7 @@
             <td class="pt-3-half" contenteditable="false">{{ item.userdetails[0].name }}</td>
             <td class="pt-3-half" contenteditable="false">{{item.provider[0].name}}</td>
             <td class="pt-3-half" contenteditable="false">{{item.service[0].name}}</td>
-            <td class="pt-3-half" contenteditable="false">{{ item.bookingDate }}</td>
+            <td class="pt-3-half" contenteditable="false">{{ item.bookingDate | formatDate }}</td>
             <td class="pt-3-half" contenteditable="false">{{ item.bookingTime }}</td>
             <td class="pt-3-half" contenteditable="false">{{ item.serviceAddress }}</td>
             <td class="pt-3-half" contenteditable="false">{{ item.serviceStatus }}</td>
@@ -50,7 +50,7 @@
               <span>
                 <button type="button"
                         class="btn btn-danger btn-rounded btn-sm my-0"
-                        v-on:click=" deleteDetails(item.id)"
+                        v-on:click=" deleteDetails(item._id)"
                         >
                   Delete
                 </button>
@@ -98,6 +98,7 @@ export default {
       async deleteDetails(id){
         if(window.confirm("Do you want to delete this user?")){
           try {
+            console.log(id);
             const deleteBooking = await deleteBookingDetailes(id);
             if(!deleteBooking){
               Vue.$toast.open({
