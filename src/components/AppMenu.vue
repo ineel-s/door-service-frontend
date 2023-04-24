@@ -50,10 +50,10 @@
             <b-dropdown-item @click.prevent="profile">Profile</b-dropdown-item>
             <b-dropdown-item @click.prevent="SignOut">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
-          <v-switch
+          <!-- <v-switch
             v-model="$vuetify.theme.dark"
             persistent-hint
-      ></v-switch>
+      ></v-switch> -->
         </b-navbar-nav>
     </b-collapse>
   </b-navbar>
