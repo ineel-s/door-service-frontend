@@ -68,13 +68,8 @@
 </template>
 
 <script>
-// import Vue from 'vue';
+import Vue from 'vue';
 import {getBookings,deleteBookingDetailes} from '@/services/bookings';
-
-
-
-
-
 export default {
     name : 'BookingDetails',
     data(){
