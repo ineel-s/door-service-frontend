@@ -39,19 +39,22 @@
           
           <tr>
             <td class="pt-3-half" contenteditable="false">{{ item.userdetails[0].name }}</td>
-            <td class="pt-3-half" contenteditable="true">{{item.provider[0].name}}</td>
+            <td class="pt-3-half" contenteditable="false">{{item.provider[0].name}}</td>
             <td class="pt-3-half" contenteditable="false">{{item.service[0].name}}</td>
             <td class="pt-3-half" contenteditable="false">{{ item.bookingDate }}</td>
             <td class="pt-3-half" contenteditable="false">{{ item.bookingTime }}</td>
             <td class="pt-3-half" contenteditable="false">{{ item.serviceAddress }}</td>
-            <td class="pt-3-half" contenteditable="true">{{ item.serviceStatus }}</td>
-            <td class="pt-3-half" contenteditable="true">{{ item.paymentStatus }}</td>
+            <td class="pt-3-half" contenteditable="false">{{ item.serviceStatus }}</td>
+            <td class="pt-3-half" contenteditable="false">{{ item.paymentStatus }}</td>
             <td>
-              <span class="table-remove"
-                ><button type="button" class="btn btn-success btn-rounded btn-sm my-0">
-                  Show
-                </button></span
-              >
+              <span>
+                <button type="button"
+                        class="btn btn-danger btn-rounded btn-sm my-0"
+                        v-on:click=" deleteDetails(item.id)"
+                        >
+                  Delete
+                </button>
+              </span>
             </td>
           </tr>
         </tbody>
@@ -66,7 +69,7 @@
 
 <script>
 // import Vue from 'vue';
-import {getBookings} from '@/services/bookings';
+import {getBookings,deleteBookingDetailes} from '@/services/bookings';
 
 
 
@@ -83,9 +86,6 @@ export default {
             error:this.error,
         }
     },
-    methods:{
-       
-    },
     async mounted(){
         this.loading = true;
         try{
@@ -98,6 +98,31 @@ export default {
         }finally{
             this.loading = false;
         }
+    },
+    methods:{
+      async deleteDetails(id){
+        if(window.confirm("Do you want to delete this user?")){
+          try {
+            const deleteBooking = await deleteBookingDetailes(id);
+            if(!deleteBooking){
+              Vue.$toast.open({
+                type:'error',
+                message:'Booking Not Deleted!',
+                position:'top'
+              })
+            }
+            Vue.$toast.open("Booking Details Deleted !")
+            window.location.reload();
+          } catch (error) {
+            Vue.$toast.open({
+              type:'error',
+              message:error.message,
+              position:"top"
+            })
+          }
+
+        }
+      }
     },
 };
 </script>

@@ -20,8 +20,15 @@ const updateBooking = async (id, details)=>{
     return response
 }
 
+const deleteBookingDetailes = async(id)=>{
+    const response = await axios.delete(`${Config.baseUrl}/bookingservice/${id}`);
+    console.log(response);
+    return response;
+}
+
 export {
     getBookings,
     bookService,
     updateBooking,
+    deleteBookingDetailes
 }

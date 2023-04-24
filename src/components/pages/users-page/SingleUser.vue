@@ -17,12 +17,6 @@
               </div>
               <h5>{{user.name}}</h5>
               <p>{{user.role}}</p>
-              <div v-if="this.$store.state.auth.role==='admin'">
-
-                <button @click.prevent="deleteUser">
-                 <i class="fa fa-trash "></i> <span>Delete user</span>
-                </button>  
-              </div>
             </div>
             <div class="col-md-8">
               <div class="card-body p-4">

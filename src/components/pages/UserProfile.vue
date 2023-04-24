@@ -17,7 +17,6 @@
               </div>
               <h5>{{this.$store.state.auth.name}}</h5>
               <p>{{this.$store.state.auth.role}}</p>
-              <i class="far fa-edit mb-5"></i>
             </div>
             <div class="col-md-8">
               <div class="card-body p-4 ">
