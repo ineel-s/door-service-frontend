@@ -11,15 +11,10 @@
               <div class="card-body ">
                 <div class="row">
                   <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                    <div
-                      class="bg-image hover-zoom ripple rounded ripple-surface"
-                    >
+                    <div class="bg-image hover-zoom ripple rounded ripple-surface">
                       <img :src="items.image" class="w-100" />
                       <a href="#!">
-                        <div
-                          class="mask"
-                          style="background-color: rgba(253, 253, 253, 0.15)"
-                        ></div>
+                        <div class="mask" style="background-color: rgba(253, 253, 253, 0.15)"></div>
                       </a>
                     </div>
                   </div>
@@ -39,9 +34,7 @@
                       <span class="h5"> Provider:</span>
                       <hr />
                       <div class="d-flex justify-content-between">
-                        <span
-                          ><span class="h6">Name -</span
-                          >{{ items.provider[0].name }}
+                        <span><span class="h6">Name -</span>{{ items.provider[0].name }}
                         </span>
                         <span>
                           <span class="h6">Address -</span>
@@ -50,37 +43,26 @@
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="
-                      col-md-6 col-lg-3 col-xl-3
-                      border-sm-start-none border-start
-                    "
-                  >
+                  <div class="
+                          col-md-6 col-lg-3 col-xl-3
+                          border-sm-start-none border-start
+                        ">
                     <div class="d-flex flex-row align-items-center mb-1">
-                      <span class="mb-1 me-1"
-                        >&#8377; {{ items.price }} &nbsp;
+                      <span class="mb-1 me-1">&#8377; {{ items.price }} &nbsp;
                       </span>
-                      <span class="text-danger"
-                        ><s>&#8377; {{ items.price * 1.5 }}</s></span
-                      >&nbsp;
+                      <span class="text-danger"><s>&#8377; {{ items.price * 1.5 }}</s></span>&nbsp;
                     </div>
                     <div class="d-flex flex-row align-items-center mb-1">
                       <h4 class="mb-1 me-1">
                         Total = &#8377; {{ items.price * 1.08 }} &nbsp;
                       </h4>
-                      <em class="text-secondary"
-                        >&#8377;{{ items.price }} + &#8377;{{
-                          items.price * 0.08
-                        }}
-                        gst</em
-                      >
+                      <em class="text-secondary">&#8377;{{ items.price }} + &#8377;{{
+                        items.price * 0.08
+                      }}
+                        gst</em>
                     </div>
                     <div class="d-flex flex-column mt-4">
-                      <button
-                        class="btn bg-success text-white btn-sm mt-2"
-                        type="button"
-                        disabled
-                      >
+                      <button class="btn bg-success text-white btn-sm mt-2" type="button" disabled>
                         Added
                       </button>
                     </div>
@@ -98,86 +80,36 @@
                       <v-card-text>
                         <v-form @submit.prevent="bookNow">
                           <validation-observer>
-                            <validation-provider
-                              v-slot="{ errors }"
-                              name="Address"
-                              rules="required|max:60"
-                            >
-                              <v-text-field
-                                v-model="serviceAddress"
-                                :error-messages="errors"
-                                label="Address"
-                                counter="60"
-                                required
-                              />
+                            <validation-provider v-slot="{ errors }" name="Address" rules="required|max:60">
+                              <v-text-field v-model="serviceAddress" :error-messages="errors" label="Address" counter="60"
+                                required />
                             </validation-provider>
-                            <validation-provider
-                              v-slot="{ errors }"
-                              name="bookingDate"
-                              rules="required"
-                            >
-                              <v-text-field
-                                v-model="bookingDate"
-                                :error-messages="errors"
-                                type="date"
-                                label="Booking Date"
-                                required
-                              />
+                            <validation-provider v-slot="{ errors }" name="bookingDate" rules="required">
+                              <v-text-field v-model="bookingDate" :error-messages="errors" type="date"
+                                label="Booking Date" required />
                             </validation-provider>
-                            <validation-provider
-                              v-slot="{ errors }"
-                              name="bookingTime"
-                              rules="required"
-                            >
-                              <v-text-field
-                                v-model="bookingTime"
-                                :error-messages="errors"
-                                type="time"
-                                label="Booking Time"
-                                required
-                              />
+                            <validation-provider v-slot="{ errors }" name="bookingTime" rules="required">
+                              <v-text-field v-model="bookingTime" :error-messages="errors" type="time"
+                                label="Booking Time" required />
                             </validation-provider>
-                            <validation-provider
-                              name="paymentStatus"
-                              rules="required"
-                            >
+                            <validation-provider name="paymentStatus" rules="required">
                               <v-radio-group v-model="paymentStatus" row>
                                 <v-radio label=" C.O.D" value="C.O.D"></v-radio>
-                                <v-radio
-                                  label="Online Payment"
-                                  value="Pending"
-                                ></v-radio>
+                                <v-radio label="Online Payment" value="Pending"></v-radio>
                               </v-radio-group>
                             </validation-provider>
                           </validation-observer>
 
                           <v-divider class="mt-12"></v-divider>
                           <div v-if="this.paymentStatus == 'Pending'">
-                            <stripe-checkout
-                              ref="checkoutRef"
-                              mode="payment"
-                              :pk="publishableKey"
-                              :lineItems="lineItems"
-                              :success-url="successURL"
-                              :cancel-url="cancelURL"
-                              @loading="(v) => (loading = v)"
-                            />
-                            <v-btn
-                              rounded
-                              color="deep-purple accent-3"
-                              type="submit"
-                              dark
-                            >
+                            <stripe-checkout ref="checkoutRef" mode="payment" :pk="publishableKey" :lineItems="lineItems"
+                              :success-url="successURL" :cancel-url="cancelURL" @loading="(v) => (loading = v)" />
+                            <v-btn rounded color="deep-purple accent-3" type="submit" dark>
                               Proceed with Online Payment
                             </v-btn>
                           </div>
                           <div v-else-if="this.paymentStatus == 'C.O.D'">
-                            <v-btn
-                              rounded
-                              color="deep-purple accent-3"
-                              type="submit"
-                              dark
-                            >
+                            <v-btn rounded color="deep-purple accent-3" type="submit" dark>
                               Proceed With COD
                             </v-btn>
                           </div>
@@ -190,6 +122,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div v-else-if="!loading && !error && items.length == 0">
+        <h1 align="center" style="color: red;">No Data Stored Yet</h1>
       </div>
     </div>
   </v-app>
@@ -243,14 +178,14 @@ export default {
       userID: this.$store.state.auth.id,
 
       loading: false,
-        lineItems: [
-          {
-            price:'',
-            quantity: 1,
-          },
-        ],
-        successURL: `${Config.baseUrl}/bookingstatus`,
-        cancelURL: `${Config.baseUrl}`,
+      lineItems: [
+        {
+          price: '',
+          quantity: 1,
+        },
+      ],
+      successURL: `${Config.baseUrl}/bookingstatus`,
+      cancelURL: `${Config.baseUrl}`,
     };
   },
   async mounted() {
@@ -276,60 +211,59 @@ export default {
       console.log(this.providerID);
       console.log(this.userID);
       //Provider can not book own service
-      if (this.providerID==this.userID) {
-        Vue.$toast.open({
-          type:"error",
-          message: "Provider can not book own services!",
-          position:"top"
-        });
-      }
-      else
-      {
-      const bookingDetails = {
-        serviceID: this.id,
-        providerID: this.items.providerID,
-        bookingDate: this.bookingDate,
-        bookingTime: this.bookingTime,
-        serviceAddress: this.serviceAddress
-      };
-      console.log(bookingDetails);
-      try {
-        console.log(this.userID);
-        if (
-          this.bookingDate === "" ||
-          this.bookingTime === "" ||
-          this.serviceAddress === ""
-        ) {
-          Vue.$toast.open({
-            type: "error",
-            message: "Please Fill All required Details",
-            position: "top",
-          });
-        } else {
-          if (this.paymentStatus == "Pending") {
-            const bookingWithpayment = {
-              paymentStatus:'Successfull',
-              ...bookingDetails
-            }
-            const booking = await bookService(this.userID, bookingWithpayment);
-            console.log(booking.data);
-            this.$refs.checkoutRef.redirectToCheckout();
-          }
-          else {
-            const booking = await bookService(this.userID, bookingDetails);
-            console.log(booking);
-            Vue.$toast.open("Service booked");
-            this.$router.push("/bookingstatus");
-          }
-        }
-      } catch (error) {
+      if (this.providerID == this.userID) {
         Vue.$toast.open({
           type: "error",
-          message: error.message,
-          position: "top",
+          message: "Provider can not book own services!",
+          position: "top"
         });
       }
-    }
+      else {
+        const bookingDetails = {
+          serviceID: this.id,
+          providerID: this.items.providerID,
+          bookingDate: this.bookingDate,
+          bookingTime: this.bookingTime,
+          serviceAddress: this.serviceAddress
+        };
+        console.log(bookingDetails);
+        try {
+          console.log(this.userID);
+          if (
+            this.bookingDate === "" ||
+            this.bookingTime === "" ||
+            this.serviceAddress === ""
+          ) {
+            Vue.$toast.open({
+              type: "error",
+              message: "Please Fill All required Details",
+              position: "top",
+            });
+          } else {
+            if (this.paymentStatus == "Pending") {
+              const bookingWithpayment = {
+                paymentStatus: 'Successfull',
+                ...bookingDetails
+              }
+              const booking = await bookService(this.userID, bookingWithpayment);
+              console.log(booking.data);
+              this.$refs.checkoutRef.redirectToCheckout();
+            }
+            else {
+              const booking = await bookService(this.userID, bookingDetails);
+              console.log(booking);
+              Vue.$toast.open("Service booked");
+              this.$router.push("/bookingstatus");
+            }
+          }
+        } catch (error) {
+          Vue.$toast.open({
+            type: "error",
+            message: error.message,
+            position: "top",
+          });
+        }
+      }
     },
   },
 };
