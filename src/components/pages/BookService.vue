@@ -316,8 +316,10 @@ export default {
             this.$refs.checkoutRef.redirectToCheckout();
           }
           else {
+            const booking = await bookService(this.userID, bookingDetails);
+            console.log(booking);
             Vue.$toast.open("Service booked");
-            this.$router.push("/bookingstatus"); 
+            this.$router.push("/bookingstatus");
           }
         }
       } catch (error) {
