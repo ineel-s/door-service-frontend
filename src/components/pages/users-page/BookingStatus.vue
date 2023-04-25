@@ -70,7 +70,7 @@
                   <hr>
                   <p>
                     <span class="h6">Provider Name :</span> <span> {{ item.provider[0].name }}</span><br>
-                    <span class="h6">Address: &nbsp;</span> {{ item.serviceAddress }}
+                    <span class="h6">Provider Contact No: &nbsp;</span> {{ item.provider[0].phoneNumber }}
                   </p>
                 </div>
                 <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
